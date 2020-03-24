@@ -20,4 +20,4 @@ unit_test:
     - composer install
     - php artisan key:generate
     - php artisan migrate
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --coverage-text --colors=never
