@@ -4,8 +4,11 @@ FROM php:7.2
 # Update packages
 RUN apt-get update
 
+# Install Node Cert
+RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+
 # Install PHP and composer dependencies
-RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip
+RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip build-essential nodejs
 
 # Clear out the local repository of retrieved package files
 RUN apt-get clean

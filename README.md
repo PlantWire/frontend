@@ -26,6 +26,14 @@ Requires a working valet or homestead environment
   npm run watch
 ```
 
+## After modifying the Dockerfile
+Requires a valid docker login session with the gitlab registry
+
+```bash
+docker build -t gitlab.dev.ifs.hsr.ch:45023/epj/2020/pwire/pwire-frontend .
+docker push gitlab.dev.ifs.hsr.ch:45023/epj/2020/pwire/pwire-frontend
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
