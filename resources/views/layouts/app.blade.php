@@ -11,7 +11,7 @@
     <body>
         <div id="app">
             @section('sidebar')
-                This is the master sidebar.
+                <h1>pWire</h1>
             @show
 
             <div class="container">

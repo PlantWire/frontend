@@ -11,6 +11,7 @@ variables:
 
 stages:
   - test
+  - build
 
 unit_test:
   stage: test
@@ -20,3 +21,14 @@ unit_test:
     - php artisan key:generate
     - php artisan migrate
     - vendor/bin/phpunit --coverage-text --colors=never
+
+build:
+  stage: build
+  script:
+    - composer install --optimize-autoloader --no-dev
+    - npm install
+    - npm run prod
+    - php artisan view:cache
+    - php artisan route:cache
+    - php artisan config:cache
+    - zip -r build.zip ./
