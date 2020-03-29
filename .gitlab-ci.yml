@@ -31,8 +31,17 @@ build:
     - php artisan view:cache
     - php artisan route:cache
     - php artisan config:cache
-    - zip -r build.zip ./
   artifacts:
     paths:
-    - build.zip
+    - artisan
+    - laravel-echo-server.json
+    - .env.example
+    - vendor
+    - storage
+    - routes
+    - resources
+    - public
+    - database
+    - config
+    - app
     expire_in: 1 week
