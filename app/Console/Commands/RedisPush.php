@@ -37,5 +37,6 @@ class RedisPush extends Command
      */
     public function handle()
     {
+        Redis::publish('pwire-server', "With love from your command line");
     }
 }
