@@ -36,8 +36,9 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
-                'cluster' => env('PUSHER_APP_CLUSTER'),
-                'useTLS' => true,
+                'host' => env('LARAVEL_ECHO_SERVER_HOST'),
+                'port' => env('LARAVEL_ECHO_SERVER_PORT'),
+                'scheme' => 'http',
             ],
         ],
 

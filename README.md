@@ -2,6 +2,30 @@
 [![pipeline status](https://gitlab.dev.ifs.hsr.ch/epj/2020/pwire/pwire-frontend/badges/master/pipeline.svg)](https://gitlab.dev.ifs.hsr.ch/epj/2020/pwire/pwire-frontend/-/commits/master)
 [![coverage report](https://gitlab.dev.ifs.hsr.ch/epj/2020/pwire/pwire-frontend/badges/master/coverage.svg)](https://gitlab.dev.ifs.hsr.ch/epj/2020/pwire/pwire-frontend/-/commits/master)
 
+## Installation
+Requires a working valet or homestead environment
+
+```bash
+  npm install -g laravel-echo-server
+  composer install
+  npm install
+  cp .env.example .env
+  vi .env 
+  # Edit .env to your liking
+  php artisan key:generate
+  php artisan migrate
+  npm run watch
+```
+
+## After each pull
+```bash
+  composer install
+  npm install
+  php artisan migrate
+  laravel-echo-server start
+  npm run watch
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

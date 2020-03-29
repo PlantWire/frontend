@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class RedisSubscribe extends Command
+class RedisPush extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'redis:subscribe';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Subscribe to the Redis event channel';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -37,10 +37,5 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-        Redis::subscribe(['pwire-frontend'], function ($message) {
-            $event = new Event;
-            $event->content = $message;
-            $event->save();
-        });
     }
 }
