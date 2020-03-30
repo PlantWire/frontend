@@ -44,4 +44,5 @@ build:
     - database
     - config
     - app
+    - bootstrap
     expire_in: 1 week
