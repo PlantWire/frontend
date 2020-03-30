@@ -36,6 +36,7 @@ build:
     - artisan
     - laravel-echo-server.json
     - .env.example
+    - composer.json
     - vendor
     - storage
     - routes
