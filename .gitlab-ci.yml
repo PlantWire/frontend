@@ -12,7 +12,6 @@ variables:
 stages:
   - test
   - build
-  - deploy
 
 unit_test:
   stage: test
@@ -48,7 +47,3 @@ build:
     - app
     - bootstrap
     expire_in: 1 week
-
-deploy:
-  stage: deploy
-  trigger: epj/2020/pwire/pwire-installer
