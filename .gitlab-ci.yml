@@ -49,5 +49,6 @@ build:
     - bootstrap
     expire_in: 1 week
 
-stage: deploy
+deploy:
+  stage: deploy
   trigger: epj/2020/pwire/pwire-installer
