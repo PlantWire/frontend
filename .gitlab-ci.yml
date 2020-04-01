@@ -29,7 +29,6 @@ build:
     - composer install --optimize-autoloader --no-dev
     - npm install
     - npm run prod
-    - rm ./public/storage
   artifacts:
     paths:
     - artisan
