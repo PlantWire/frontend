@@ -35,6 +35,9 @@ build:
     - laravel-echo-server.json
     - .env.example
     - composer.json
+    - composer.lock
+    - package.json
+    - package-lock.json
     - vendor
     - storage
     - routes
@@ -42,8 +45,10 @@ build:
     - public
     - database
     - config
+    - tests
     - app
     - bootstrap
+    - server.php
     expire_in: 1 week
 
 deploy:
