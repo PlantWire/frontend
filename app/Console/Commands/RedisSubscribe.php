@@ -40,7 +40,7 @@ class RedisSubscribe extends Command
     {
         \Illuminate\Support\Facades\Redis::subscribe(['pwire-frontend'], function ($message) {
             $event = new Event;
-            $event->content = $message;
+            $event->content = utf8_encode($message);
             $event->save();
         });
     }
