@@ -15,3 +15,4 @@ use App\Http\Controllers\Dashboard;
 */
 
 Route::get('/', 'Dashboard@index')->name('dashboard');
+Route::get('/publish/{message}', 'Dashboard@publish')->name('dashboard');

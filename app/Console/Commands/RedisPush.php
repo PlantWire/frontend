@@ -12,7 +12,7 @@ class RedisPush extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'redis:push';
 
     /**
      * The console command description.
@@ -38,6 +38,6 @@ class RedisPush extends Command
      */
     public function handle()
     {
-        Redis::publish('pwire-server', "With love from your command line");
+        Redis::publish('pwire-server', "With love, your frontend");
     }
 }

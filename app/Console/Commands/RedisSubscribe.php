@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
+use App\Event;
 
 class RedisSubscribe extends Command
 {
@@ -38,7 +38,7 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-        Redis::subscribe(['pwire-frontend'], function ($message) {
+        \Illuminate\Support\Facades\Redis::subscribe(['pwire-frontend'], function ($message) {
             $event = new Event;
             $event->content = $message;
             $event->save();
