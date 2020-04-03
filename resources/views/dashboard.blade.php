@@ -23,6 +23,15 @@
                 </div>
             </div>
         </div>
-        <example-component></example-component>
+
+        <div class="border-top my-3"></div>
+
+        <h2>My plants</h2>
+
+        <div class="row row-cols-1 row-cols-md-2">
+            @foreach ($events as $event)
+                <measurement-display-component></measurement-display-component>
+            @endforeach
+        </div>
     </div>
 @endsection
