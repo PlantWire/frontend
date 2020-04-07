@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class HumidityMeasurement extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,11 +12,11 @@ class Event extends Model
      * @var array
      */
     protected $fillable = [
-        'content',
+        'value',
     ];
 
     /**
-     * Get the sensor this event belongs to
+     * Get the sensor this measurement belongs to
      */
     public function sensor()
     {
