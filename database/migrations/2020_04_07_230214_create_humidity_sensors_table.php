@@ -17,7 +17,7 @@ class CreateHumiditySensorsTable extends Migration
             $table->id();
             $table->string('uuid', 100);
             $table->text('name');
-            $table->int('alarm_threshold');
+            $table->integer('alarm_threshold');
             $table->text('notes');
             $table->dateTime('measurement_start', 0)->useCurrent();
             $table->string('measurement_interval');
