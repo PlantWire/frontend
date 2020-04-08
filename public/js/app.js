@@ -2024,29 +2024,39 @@ __webpack_require__.r(__webpack_exports__);
   "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Line"],
   props: ['chartdata', 'options'],
   mounted: function mounted() {
-    if (this.chartdata = undefined) {
-      this.fillData();
-    }
-
-    this.renderChart(this.chartdata, this.options);
-  },
-  methods: {
-    fillData: function fillData() {
-      this.chartdata = {
-        labels: [this.getRandomInt(), this.getRandomInt()],
+    if (this.chartdata == undefined) {
+      this.renderChart({
+        labels: ["4 days ago", "3 days ago", "2 days ago", "1 days ago", "4 hours ago", "2 hours ago", "1 hour ago"],
         datasets: [{
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [this.getRandomInt(), this.getRandomInt()]
-        }, {
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [this.getRandomInt(), this.getRandomInt()]
+          label: 'Humidity',
+          backgroundColor: 'RGB(255, 255, 255, 255)',
+          borderColor: 'RGBA(32, 156, 238, .6)',
+          data: [100, 98, 96, 45, 23, 12, 3, 0]
         }]
-      };
-    },
-    getRandomInt: function getRandomInt() {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+      }, {
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false
+            }
+          }]
+        }
+      });
+    } else {
+      this.renderChart(this.chartdata, this.options);
     }
   }
 });
