@@ -16,7 +16,7 @@ class CreateHumidityMeasurementsTable extends Migration
         Schema::create('humidity_measurements', function (Blueprint $table) {
             $table->id();
             $table->integer('value');
-            $table->foreignId('sensor_id')->references('id')->on('humidity_sensors');
+            $table->foreignId('humidity_sensor_id')->references('id')->on('humidity_sensors');
             $table->timestamps();
         });
     }

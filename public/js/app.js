@@ -2100,8 +2100,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['sensor'],
+  data: function data() {
+    return {
+      example: {
+        labels: ["4 days ago", "3 days ago", "2 days ago", "1 days ago", "4 hours ago", "2 hours ago", "1 hour ago"],
+        datasets: [{
+          label: 'Humidity',
+          backgroundColor: 'RGB(255, 255, 255, 255)',
+          borderColor: 'RGBA(32, 156, 238, .6)',
+          data: [30, 98, 96, 45, 23, 12, 3, 0]
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false
+            }
+          }]
+        }
+      }
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    // Do something useful with the data in the template
+    console.dir(this.sensor);
   }
 });
 
@@ -83160,7 +83197,9 @@ var render = function() {
         "div",
         { staticClass: "content" },
         [
-          _c("humidity-line-chart"),
+          _c("humidity-line-chart", {
+            attrs: { chartdata: _vm.example, options: _vm.options }
+          }),
           _vm._v(" "),
           _c("br"),
           _vm._v("\n          Last update: "),
@@ -95792,8 +95831,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/olivergoldi/Library/Mobile Documents/com~apple~CloudDocs/Projects/pwire/frontend/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/olivergoldi/Library/Mobile Documents/com~apple~CloudDocs/Projects/pwire/frontend/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),
