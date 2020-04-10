@@ -16,3 +16,5 @@ use App\Http\Controllers\Dashboard;
 
 Route::get('/', 'Dashboard@index')->name('dashboard');
 Route::get('/publish/{message}', 'Dashboard@publish')->name('dashboard');
+Route::redirect('/change-sensor/', '/');
+Route::get('/change-sensor/{sensor}', 'DetailView@change')->name('change-sensor');
