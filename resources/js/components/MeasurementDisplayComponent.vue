@@ -12,7 +12,7 @@
                 <div class="content">
                     <p class="subtitle is-4">{{lastMeasurement}}</p>
 
-                    <humidity-line-chart :chartdata="chartdata" :options="options"></humidity-line-chart>
+                    <humidity-line-chart :chartData="chartdata" :options="options"></humidity-line-chart>
                     <br>
                     Last update: {{lastUpdate}}
                     <br>
@@ -61,15 +61,8 @@
         data() {
             return {
                 chartdata: {
-                    labels: this.sensor.measurements.map(m => generateTimeAgoString(m.created_at)),
-                    datasets: [
-                        {
-                            label: 'Moisture',
-                            backgroundColor: 'RGB(255, 255, 255, 255)',
-                            borderColor: 'RGBA(32, 156, 238, .6)',
-                            data: this.sensor.measurements.map(m => m.value)
-                        }
-                    ]
+                    labels: undefined, //replaced when mounted() ist called
+                    datasets: undefined
                 },
                 options: {
                     legend: {
@@ -92,7 +85,8 @@
                             }
                         }]
                     }
-                }
+                },
+                data: true
             };
         },
         computed: {
@@ -109,6 +103,22 @@
             lastMeasurement: function () {
                 let last = lastMeasurement(this.sensor.measurements);
                 return "Moisture: " + ((last === undefined) ? "?" : last.value);
+            },
+
+            chartData: function() {
+                return this.chartdata.datasets.data = this.sensor.measurements.map(m => m.value);
+            }
+        }, mounted() {
+            this.chartdata = {
+                labels: this.sensor.measurements.map(m => generateTimeAgoString(m.created_at)),
+                datasets: [
+                    {
+                        label: 'Moisture',
+                        backgroundColor: 'RGB(255, 255, 255, 255)',
+                        borderColor: 'RGBA(32, 156, 238, .6)',
+                        data: this.sensor.measurements.map(m => m.value)
+                    }
+                ]
             }
         }
     }

@@ -1,11 +1,13 @@
 <script>
-import { Line } from 'vue-chartjs'
+import { Line, mixins } from 'vue-chartjs'
+const { reactiveProp } = mixins
 
 export default {
     extends: Line,
-    props: ['chartdata', 'options'],
+    mixins: [reactiveProp],
+    props: ['options'],
     mounted () {
-        if(this.chartdata == undefined) {
+        if(this.chartData == undefined) {
             this.renderChart({
                 labels: ["4 days ago", "3 days ago",  "2 days ago",  "1 days ago", "4 hours ago", "2 hours ago", "1 hour ago"],
                 datasets: [
@@ -39,7 +41,7 @@ export default {
                 }
             })
         } else {
-            this.renderChart(this.chartdata, this.options)
+            this.renderChart(this.chartData, this.options)
         }
     }
 }
