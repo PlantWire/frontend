@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}" />
-
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <title>pWire - @yield('title')</title>
     </head>
     <body>
@@ -50,18 +50,29 @@
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-light">
-                                Log in
-                            </a>
+                            @guest
+                                <a class="button is-primary" href="/login">
+                                    Log in
+                                </a>
+                            @endguest
+                            @auth
+                                <form action="/logout" method="POST">
+                                @csrf
+                                <input type="submit" class="button is-light" value="Log out"/>
+                            @endauth
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
         <div id="app">
-            <div class="container">
-                @yield('content')
-            </div>
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @yield('content')
         </div>
         <script src="{{ mix('/js/app.js') }}"></script>
     </body>
