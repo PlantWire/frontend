@@ -3,27 +3,19 @@
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title">
-                    {{name}}
+                    {{sensor.name + " "}}
+                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'low moisture!' : 'everything is ok' }}</span>
                 </p>
-                <a aria-label="hide" class="card-header-icon" href="#">
-                    <span class="icon">
-                        <i aria-hidden="true" class="fas fa-angle-up"></i>
-                    </span>
-                </a>
             </header>
 
             <div class="card-content">
                 <div class="content">
-                    <p class="subtitle is-4">{{notes}}</p>
+                    <p class="subtitle is-4">{{lastMeasurement}}</p>
 
-                    <humidity-line-chart :chartdata="example" :options="options"></humidity-line-chart>
+                    <humidity-line-chart :chartdata="chartdata" :options="options"></humidity-line-chart>
                     <br>
                     Last update: {{lastUpdate}}
                     <br>
-                    Sensor created: {{sensorCreated}}
-                    <br>
-
-                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'value below threshold' : 'everything is ok' }}</span>
                 </div>
             </div>
 
@@ -61,37 +53,21 @@
 
     function generateLastUpdateString(measurements) {
         let last = lastMeasurement(measurements);
-        return (last === undefined) ? "no measurements yet" : generateTimeAgoString(last.created_at)
-    }
-
-    function isBelowAlarmThreshold(measurements, alarmThreshold) {
-        let last = lastMeasurement(measurements);
-        if (last === undefined) {
-            return false;
-        }
-
-        return alarmThreshold > last.value;
+        return (last === undefined) ? "never" : generateTimeAgoString(last.created_at)
     }
 
     export default {
-        props: ['sensor', 'measurements'],
+        props: ['sensor'],
         data() {
             return {
-                name: this.sensor.name,
-                alarmThreshold: this.sensor.alarmThreshold,
-                notes: this.sensor.notes,
-                lastUpdate: generateLastUpdateString(this.measurements),
-                sensorCreated: generateTimeAgoString(this.sensor.created_at),
-                isBelowAlarmThreshold: isBelowAlarmThreshold(this.measurements, this.sensor.alarm_threshold),
-
-                example: {
-                    labels: this.measurements.map(m => generateTimeAgoString(m.created_at)),
+                chartdata: {
+                    labels: this.sensor.measurements.map(m => generateTimeAgoString(m.created_at)),
                     datasets: [
                         {
                             label: 'Moisture',
                             backgroundColor: 'RGB(255, 255, 255, 255)',
                             borderColor: 'RGBA(32, 156, 238, .6)',
-                            data: this.measurements.map(m => m.value)
+                            data: this.sensor.measurements.map(m => m.value)
                         }
                     ]
                 },
@@ -119,9 +95,21 @@
                 }
             };
         },
-        mounted() {
-            // Do something useful with the data in the template
-            console.dir(this.sensor)
+        computed: {
+            lastUpdate: function () {
+                return generateLastUpdateString(this.sensor.measurements);
+            },
+            isBelowAlarmThreshold: function () {
+                let last = lastMeasurement(this.sensor.measurements);
+                if (last === undefined) {
+                    return false;
+                }
+                return this.sensor.alarm_threshold > last.value;
+            },
+            lastMeasurement: function () {
+                let last = lastMeasurement(this.sensor.measurements);
+                return "Moisture: " + ((last === undefined) ? "?" : last.value);
+            }
         }
     }
 </script>

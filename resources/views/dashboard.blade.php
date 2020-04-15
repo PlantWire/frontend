@@ -7,7 +7,7 @@
         <div class="container">
             <div class="columns">
                 @foreach ($sensors as $sensor)
-                    <measurement-display-component :sensor="{{ $sensor }}" :measurements="{{ $sensor->measurements }}">
+                    <measurement-display-component :sensor="{{ $sensor }}">
                     </measurement-display-component>
                 @endforeach
             </div>
