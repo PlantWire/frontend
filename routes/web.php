@@ -16,7 +16,3 @@ use App\Http\Controllers\Dashboard;
 
 Route::get('/', 'Dashboard@index')->name('dashboard');
 Route::get('/publish/{message}', 'Dashboard@publish')->name('dashboard');
-
-// AUthentification
-Auth::routes();
-Route::get('/user/{user}', 'UserController@index')->name('edit_user');
