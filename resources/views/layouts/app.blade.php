@@ -45,6 +45,10 @@
                             </a>
                         </div>
                     </div>
+
+                    <a class="navbar-item" href="/add_sensor">
+                        Add Sensor
+                     </a>
                 </div>
 
                 <div class="navbar-end">
