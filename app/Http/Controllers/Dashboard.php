@@ -12,7 +12,7 @@ class Dashboard extends Controller
 {
     public function index()
     {
-        return view('dashboard', ['events' => Event::all(), 'sensors'=> HumiditySensor::all()]);
+        return view('dashboard', ['events' => Event::all(), 'sensors'=> HumiditySensor::with('measurements')->get()]);
     }
 
     public function publish($message) {
