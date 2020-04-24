@@ -11,7 +11,7 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
-                    <img src="/img/logo.svg" width="112" height="28">
+                    <img src="/img/logo.svg" width="112" height="28" alt="pWire Logo">
                 </a>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="pwireNavigationBar">
