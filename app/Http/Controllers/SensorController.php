@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\HumiditySensor;
-use App\Http\Requests\AddSensorRequest;
+use App\Http\Requests\StoreSensorRequest;
 
-class AddSensorController extends Controller
+class SensorController extends Controller
 {
     /*public function __construct () {
         $this->middleware('auth');
     }*/
 
-    public function addSensor()
+    public function create()
     {
-        return view('add-sensor');
+        return view('create-sensor');
     }
 
-    public function saveSensor(AddSensorRequest $request) {
+    public function store(StoreSensorRequest $request) {
 
         $uuid = $request->input('uuid');
         $pin = $request->input('pin');

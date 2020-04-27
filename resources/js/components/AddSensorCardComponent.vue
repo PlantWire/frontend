@@ -9,7 +9,7 @@
 
             <div class="card-content">
                 <div class="content">
-                    <a class="button is-primary" href="/add_sensor">
+                    <a class="button is-primary" href="/create_sensor">
                          Add a new sensor
                     </a>
                 </div>

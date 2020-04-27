@@ -16,5 +16,5 @@ use App\Http\Controllers\Dashboard;
 
 Route::get('/', 'Dashboard@index')->name('dashboard');
 Route::get('/publish/{message}', 'Dashboard@publish')->name('dashboard');
-Route::get('/add_sensor', 'AddSensorController@addSensor')->name('add_sensor');
-Route::post('/save_sensor', 'AddSensorController@saveSensor')->name('save_sensor');
+Route::get('/create_sensor', 'SensorController@create')->name('create_sensor');
+Route::post('/store_sensor', 'SensorController@store')->name('store_sensor');

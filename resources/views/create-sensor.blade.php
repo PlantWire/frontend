@@ -8,7 +8,7 @@
         <div class="box">
             <h1 class="title">{{ __('Add a new sensor') }}</h1>
 
-            <form method="POST" action="{{ route('save_sensor') }}">
+            <form method="POST" action="{{ route('store_sensor') }}">
             @csrf
                 <div class="field">
                     <p class="control has-icons-left">
@@ -58,5 +58,7 @@
 
             </form>
         </div>
-    </section>
+    </div>
+</div>
+</section>
 @endsection

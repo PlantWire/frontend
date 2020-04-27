@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddSensorRequest extends FormRequest
+class StoreSensorRequest extends FormRequest
 {
 
     /*public function authorize()
