@@ -23,35 +23,41 @@
 
             <div id="pwireNavigationBar" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item">
+                    <a class="navbar-item" href="{{ route('dashboard') }}">
                         Dashboard
                     </a>
 
-                    <a class="navbar-item">
-                        Event Log
-                    </a>
-
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Settings
+                    @auth
+                        <a class="navbar-item">
+                            Event Log
                         </a>
 
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                User Settings
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                Settings
                             </a>
-                            <a class="navbar-item">
-                                Plattform Settings
-                            </a>
-                        </div>
-                    </div>
 
-                    <a class="navbar-item" href="/create_sensor">
-                        Add Sensor
-                     </a>
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{route('edit_user', Auth::user())}}">
+                                    User Settings
+                                </a>
+                                <a class="navbar-item">
+                                    Plattform Settings
+                                </a>
+                            </div>
+                        </div>
+                        <a class="navbar-item" href="/create_sensor">
+                            Add Sensor
+                         </a>
+                    @endauth
                 </div>
 
                 <div class="navbar-end">
+                    @auth
+                        <div class="navbar-item">
+                            {{ __('Welcome')}} {{ Auth::user()->name }}
+                        </div>
+                    @endauth
                     <div class="navbar-item">
                         <div class="buttons">
                             @guest
@@ -61,8 +67,9 @@
                             @endguest
                             @auth
                                 <form action="/logout" method="POST">
-                                @csrf
-                                <input type="submit" class="button is-light" value="Log out"/>
+                                    @csrf
+                                    <input type="submit" class="button is-light" value="Log out"/>
+                                </form>
                             @endauth
                         </div>
                     </div>
@@ -70,11 +77,36 @@
             </div>
         </nav>
         <div id="app">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
+            <div class="container">
+                @if (session('success'))
+                    @foreach (session('success') as $key => $message)
+                        <div class="notification is-success" role="alert">
+                            {{ $message }}
+                        </div>
+                    @endforeach
+                @endif
+                @if (session('warning'))
+                    @foreach (session('warning') as $key => $message)
+                        <div class="notification is-warning" role="alert">
+                            {{ $message }}
+                        </div>
+                    @endforeach
+                @endif
+                @if (session('error'))
+                    @foreach (session('error') as $key => $message)
+                        <div class="notification is-danger" role="alert">
+                            {{ $message }}
+                        </div>
+                    @endforeach
+                @endif
+                @if (session('info'))
+                    @foreach (session('info') as $key => $message)
+                        <div class="notification is-info" role="alert">
+                            {{ $message }}
+                        </div>
+                    @endforeach
+                @endif
+            </div>
 
             @yield('content')
         </div>
