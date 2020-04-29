@@ -25,11 +25,11 @@ class StoreHumiditySensor extends FormRequest
     {
         return [
             'sensor_name' => 'required|alpha_num|max:255',
-            'alarm_threshold' => 'nullable|digits_between:0,100',
+            'alarm_threshold' => 'nullable|integer|between:0,100',
             'note' => 'nullable|string|max:10000',
-            'measurement_interval_years' => 'nullable|digits_between:0,100',
-            'measurement_interval_months' => 'nullable|digits_between:0,12',
-            'measurement_interval_days' => 'nullable|digits_between:0,31',
+            'measurement_interval_years' => 'nullable|integer|between:0,99',
+            'measurement_interval_months' => 'nullable|integer|between:0,11',
+            'measurement_interval_days' => 'nullable|integer|between:0,30',
             'measurement_start' => 'nullable|date|after_or_equal:now',
         ];
     }
