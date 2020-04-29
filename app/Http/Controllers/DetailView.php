@@ -25,8 +25,8 @@ class DetailView extends Controller
         if(isset($request->alarm_threshold)) {
             $sensor->alarm_threshold = $request->alarm_threshold;
         }
-        if(isset($request->note)) {
-            $sensor->note = $request->note;
+        if(isset($request->notes)) {
+            $sensor->notes = $request->notes;
         }
         if(isset($request->measurement_interval_years) or isset($request->measurement_interval_months) or isset($request->measurement_interval_days)) {
             $years = 0;

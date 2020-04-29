@@ -12,7 +12,7 @@ class HumiditySensor extends Model
      * @var array
      */
     protected $fillable = [
-        'uuid', 'name', 'alarm_threshold' ,'note', 'measurement_start', 'measurement_interval',
+        'uuid', 'name', 'alarm_threshold' ,'notes', 'measurement_start', 'measurement_interval',
     ];
 
     /**

@@ -37,11 +37,11 @@
                     </div>
                 </div>
                 <div class="field is-horizontal">
-                    <label class="label field-label"  for="note">Notes</label>
+                    <label class="label field-label"  for="notes">Notes</label>
                     <div class="field-body @error('note') has-addons is-danger @enderror">
-                        <div class="control">
-                            <textarea class="textarea" id="note" name="note" value="{{old('note', $sensor->note)}}"></textarea>
-                            @error ('note')
+                        <div class="control is-expanded">
+                            <textarea class="textarea" id="notes" name="notes" value="{{old('notes', $sensor->notes)}}"></textarea>
+                            @error ('notes')
                                 <p class="help is-danger" role="alert">
                                     {{$message}}
                                 </p>
@@ -107,7 +107,7 @@
                         <!-- Left empty for spacing -->
                     </label>
                     <div class="field-body control">
-                        <a href="/" class="button">Return to Dashboard</a>
+                        <a href="/" class="button">Return to Dashboard</a>&nbsp;
                         <input class="button is-primary" id="submit" type="submit" value="Save changes">
                     </div>
                 </div>
