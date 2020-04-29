@@ -15,7 +15,13 @@ use App\Http\Controllers\Dashboard;
 */
 
 Route::get('/', 'Dashboard@index')->name('dashboard');
-Route::get('/publish/{message}', 'Dashboard@publish')->name('dashboard');
+Route::get('/create_sensor', 'SensorController@create')->name('create_sensor');
+Route::post('/store_sensor', 'SensorController@store')->name('store_sensor');
 Route::redirect('/change-sensor/', '/');
 Route::get('/change-sensor/{sensor}', 'DetailView@update')->name('change-sensor');
 Route::post('/store/{sensor}', 'DetailView@store');
+
+// Authentification
+Auth::routes();
+Route::get('/user/{user}', 'UserController@index')->name('edit_user');
+Route::post('/user/{user}', 'UserController@store')->name('store_user');
