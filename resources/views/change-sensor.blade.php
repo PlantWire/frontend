@@ -8,56 +8,107 @@
             <div class="title">
                 <h1>Change Sensor Details</h1>
             </div>
-            <form method="post">
+            <form method="post" action="/store/{{$sensor->id}}">
                 @csrf
                 <div class="field is-horizontal">
-                    <label class="label field-label" for="sensor-name">Sensor Name</label>
-                    <div class="control field-body">
-                        <input type="text" id="sensor-name" name="sensor-name" value="{{$sensor->name}}">
+                    <label class="label field-label" for="sensor_name">Sensor Name</label>
+                    <div class="field-body @error('sensor_name') has-addons is-danger @enderror">
+                        <div class="control">
+                            <input type="text" id="sensor_name" name="sensor_name" value="{{old('sensor_name', $sensor->name)}}">
+                            @error ('sensor_name')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="field is-horizontal">
-                    <label class="label field-label"  for="alarm-threshold">Alarm Threshold</label>
-                    <div class="control field-body">
-                        <input type="number" id="alarm-threshold" name="alarm-threshold" value="{{$sensor->alarm_threshold}}" min="0" max="100">
+                    <label class="label field-label"  for="alarm_threshold">Alarm Threshold</label>
+                    <div class="field-body @error('alarm_threshold') has-addons is-danger @enderror">
+                        <div class="control">
+                            <input type="number" id="alarm_threshold" name="alarm_threshold" value="{{old('alarm_threshold', $sensor->alarm_threshold)}}" min="0" max="100">
+                            @error ('alarm_threshold')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="field is-horizontal">
                     <label class="label field-label"  for="note">Notes</label>
-                    <div class="control field-body">
-                        <textarea class="textarea" id="note" name="note" value="{{$sensor->note}}"></textarea>
-                    </div>
-                </div>
-                <div class="field is-horizontal">
-                    <label class="label field-label"  for="measurement-interval-years">Measurement Interval</label>
-                    <div class="field-body">
+                    <div class="field-body @error('note') has-addons is-danger @enderror">
                         <div class="control">
-                                <input type="text" id="measurement-interval-years" name="measurement-interval-years" value="{{$sensor->measurement_interval}}" placeholder="e.g. d1y2m3d"><br/>
+                            <textarea class="textarea" id="note" name="note" value="{{old('note', $sensor->note)}}"></textarea>
+                            @error ('note')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="field is-horizontal">
-                    <label class="label field-label"  for="measurement-start">Next Measurement Time</label>
+                    <label class="label field-label"  for="measurement_interval_years">Measurement Interval</label>
                     <div class="field-body">
-                        <div class="field has-addons">
-                            <div class="control">
-                                <input type="datetime-local" id="measurement-start" name="measurement-start" placeholder="e.g. 2020-04-15 17:45"><br/>
-                                <p class="help">leave empty to not change next planned measurement time</p>
-                            </div>
+                        <div class="control @error('measurement_interval_years') has-addons is-danger @enderror">
+                                <input type="text" id="measurement_interval_years" name="measurement_interval_years" value="{{old('measurement_interval_years', $sensor->measurement_interval_years)}}">&nbsp; years
+                            @error ('measurement_interval_years')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="field is-horizontal">
-                    <div class="field-label">
+                    <label class="label field-label"  for="measurement_interval_months"></label>
+                    <div class="field-body">
+                        <div class="control @error('measurement_interval_months') has-addons is-danger @enderror">
+                                <input type="text" id="measurement_interval_months" name="measurement_interval_months" value="{{old('measurement_interval_months', $sensor->measurement_interval_months)}}">&nbsp; months
+                            @error ('measurement_interval_months')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <label class="label field-label"  for="measurement_interval_days"></label>
+                    <div class="field-body">
+                        <div class="control @error('measurement_interval_days') has-addons is-danger @enderror">
+                                <input type="text" id="measurement_interval_days" name="measurement_interval_days" value="{{old('measurement_interval_days', $sensor->measurement_interval_days)}}">&nbsp; days
+                            @error ('measurement_interval_days')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <label class="label field-label"  for="measurement_start">Next Measurement Time</label>
+                    <div class="field-body has-addons @error('measurement_start') is-danger @enderror">
+                        <div class="control">
+                            <input type="datetime-local" id="measurement_start" name="measurement_start" placeholder="e.g. 2020-04-15 17:45">
+                            @error ('measurement_start')
+                                <p class="help is-danger" role="alert">
+                                    {{$message}}
+                                </p>
+                            @enderror
+                            <p class="help">leave empty to not change next planned measurement time</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <label class="label field-label" for="submit">
                         <!-- Left empty for spacing -->
-                    </div>
-                    <div class="field-body">
-                        <div class="field control">
-                            <input class="button is-primary" type="submit" value="Save changes">
-                        </div>
-                        <div class="field control">
-                            <a href="/" class="card-footer-item">Return to Dashboard</a>
-                        </div>
+                    </label>
+                    <div class="field-body control">
+                        <a href="/" class="button">Return to Dashboard</a>
+                        <input class="button is-primary" id="submit" type="submit" value="Save changes">
                     </div>
                 </div>
             </form>
