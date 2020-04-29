@@ -22,7 +22,7 @@ class HumiditySensor extends Model
      */
     protected $casts = [
         'measurement_start' => 'datetime',
-        //'measurement_interval' => 'dateinterval'
+        'measurement_interval' => \App\Casts\CarbonInterval::class
     ];
 
     /**
