@@ -4,14 +4,17 @@
 
 use App\Model;
 use Faker\Generator as Faker;
+use App\HumiditySensor;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 $factory->define(HumiditySensor::class, function (Faker $faker) {
     return [
-        'uuid' => "4df992ed-12eb-4e11-a428-4d6dd3f43f2d",
+        'uuid' => $faker->uuid,
         'name' => $faker->word,
         'alarm_threshold' => $faker->randomDigitNotNull,
-        'note' => $faker->sentence,
-        'measurement_start' => Carbon($faker->dateTime($max = 'now', $timezone = null)),
+        'notes' => $faker->sentence,
+        'measurement_start' => new Carbon($faker->dateTime($max = 'now', $timezone = null)),
         'measurement_interval' => CarbonInterval::hours($faker->numberBetween($min = 1, $max = 24)),
     ];
 });

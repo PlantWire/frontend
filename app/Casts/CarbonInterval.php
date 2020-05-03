@@ -3,7 +3,6 @@
 namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Carbon;
 
 class CarbonInterval implements CastsAttributes
 {
@@ -18,7 +17,7 @@ class CarbonInterval implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return unserialize($value);
+        return new \Carbon\CarbonInterval($value);
     }
 
     /**
@@ -32,6 +31,6 @@ class CarbonInterval implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        return serialize($value);
+        return $value->spec();
     }
 }

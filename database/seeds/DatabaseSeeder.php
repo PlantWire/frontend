@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(HumiditySensorsTableSeeder::class);
-        $this->call(EventsTableSeeser::class);
+        $this->call(EventsTableSeeder::class);
         $this->call(HumidityMeasurementsTableSeeder::class);
     }
 }
