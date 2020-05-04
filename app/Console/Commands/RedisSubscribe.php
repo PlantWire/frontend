@@ -39,9 +39,10 @@ class RedisSubscribe extends Command
     public function handle()
     {
         \Illuminate\Support\Facades\Redis::subscribe(['pwire-frontend'], function ($message) {
-            $event = new Event;
-            $event->content = utf8_encode($message);
+            $event = new Event();
+            $event->content = utf8_encode($message->content);
             $event->save();
+            Log::info('Handled event of type '.$message->type.' from '.$message->sender);
         });
     }
 }

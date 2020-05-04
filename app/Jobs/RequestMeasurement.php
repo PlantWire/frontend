@@ -34,7 +34,7 @@ class RequestMeasurement implements ShouldQueue
     public function handle()
     {
         $request = [
-            'Type' => 'MeasurementRequest',
+            'Type' => 'HumidityMeasurementRequest',
             'Target' => $sensor->uuid,
             'Sender' => env('LORA_UUID'),
             'Content' => []
