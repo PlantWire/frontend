@@ -13,6 +13,15 @@ class Dashboard extends Controller
 {
     public function index()
     {
-        return view('dashboard', ['events' => Event::all(), 'sensors'=> HumiditySensor::with('measurements')->get()]);
+        return view('dashboard', ['events' => Event::all(), 'sensors'=>
+            HumiditySensor
+                ::with(array('measurements' => function($query) {
+                    $query
+                        ->orderBy('created_at', 'ASC')
+                    ;
+                }))
+                ->orderBy('name', 'ASC')
+                ->get()
+        ]);
     }
 }
