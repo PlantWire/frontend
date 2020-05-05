@@ -34,6 +34,6 @@ class SensorController extends Controller
         $newSensorId =  $humiditySensor->id;
         //return redirect('/change-sensor/'.$newSensorId); //can be commented-in when change-sensor form is merged
 
-        return redirect()->action('DetailView@change')->with('success', [__('New Sensor added successfully')]);
+        return redirect()->action('Dashboard@index')->with('success', [__('New Sensor added successfully')]);
     }
 }
