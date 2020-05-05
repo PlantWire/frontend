@@ -10,7 +10,10 @@
                     <measurement-display-component :sensor="{{ $sensor }}">
                     </measurement-display-component>
                 @endforeach
-                <add-sensor-card-component></add-sensor-card-component>
+
+                @auth
+                    <add-sensor-card-component></add-sensor-card-component>
+                @endauth
             </div>
         </div>
     </section>
