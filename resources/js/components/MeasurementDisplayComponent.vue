@@ -30,6 +30,9 @@
 </template>
 
 <script>
+
+    const max_amount_of_measurements_per_sensor_to_display = 15;
+
     function generateTimeAgoString(pastDate) {
         function calculateHoursAgo(pastDate) {
             let millisecondsPerHour = 1000 * 60 * 60;
@@ -54,6 +57,20 @@
     function generateLastUpdateString(measurements) {
         let last = lastMeasurement(measurements);
         return (last === undefined) ? "never" : generateTimeAgoString(last.created_at)
+    }
+
+    function compareMeasurementDate(firstMeasurement, secondMeasurement) {
+        if (firstMeasurement.created_at < secondMeasurement.created_at)
+            return -1;
+        if (firstMeasurement.created_at > secondMeasurement.created_at)
+            return 1;
+        return 0;
+    }
+
+    function convertMeasurements(measurements) {
+        return measurements
+            .sort(compareMeasurementDate)
+            .slice(Math.max(measurements.length - max_amount_of_measurements_per_sensor_to_display, 0));
     }
 
     export default {
@@ -110,13 +127,13 @@
             }
         }, mounted() {
             this.chartdata = {
-                labels: this.sensor.measurements.map(m => generateTimeAgoString(m.created_at)),
+                labels: convertMeasurements(this.sensor.measurements).map(m => generateTimeAgoString(m.created_at)),
                 datasets: [
                     {
                         label: 'Moisture',
                         backgroundColor: 'RGB(255, 255, 255, 255)',
                         borderColor: 'RGBA(32, 156, 238, .6)',
-                        data: this.sensor.measurements.map(m => m.value)
+                        data: convertMeasurements(this.sensor.measurements).map(m => m.value)
                     }
                 ]
             }

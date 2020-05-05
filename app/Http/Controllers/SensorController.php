@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\HumiditySensor;
 use App\Http\Requests\StoreSensorRequest;
-use Carbon;
+use Carbon\CarbonInterval;
 
 class SensorController extends Controller
 {
@@ -31,6 +31,9 @@ class SensorController extends Controller
         $humiditySensor->notes = '';
         $humiditySensor->save();
 
-        return redirect()->action('Dashboard@index')->with('success', [__('New Sensor added successfully')]);
+        $newSensorId =  $humiditySensor->id;
+        //return redirect('/change-sensor/'.$newSensorId); //can be commented-in when change-sensor form is merged
+
+        return redirect()->action('DetailView@change')->with('success', [__('New Sensor added successfully')]);
     }
 }
