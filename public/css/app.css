@@ -6025,6 +6025,10 @@ fieldset[disabled] .select select:hover {
   margin-bottom: 0;
 }
 
+.field.is-danger {
+  background-color: #fdeded;
+}
+
 @media screen and (min-width: 769px), print {
   .field.is-horizontal {
     display: flex;
@@ -12017,5 +12021,9 @@ label.panel-block:hover {
 .login_container,
 .login_columns {
   min-height: calc(100vh - 3.5rem);
+}
+
+.card-header-title .tag {
+  margin-left: 0.75em;
 }
 

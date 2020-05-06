@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Event;
 use App\HumiditySensor;
 use App\Http\Requests\StoreHumiditySensor;
+use Carbon\CarbonInterval;
 
 class DetailView extends Controller
 {
@@ -28,26 +29,16 @@ class DetailView extends Controller
         if(isset($request->notes)) {
             $sensor->notes = $request->notes;
         }
-        if(isset($request->measurement_interval_years) or isset($request->measurement_interval_months) or isset($request->measurement_interval_days)) {
-            $years = 0;
-            $days = 0;
-            $months = 0;
-            if(isset($request->measurement_interval_years)) {
-                $years = $request->measurement_interval_years;
-            }
-            if(isset($request->measurement_interval_months)) {
-                $months = $request->measurement_interval_months;
-            }
-            if(isset($request->measurement_interval_days)) {
-                $days = $request->measurement_interval_days;
-            }
-            $sensor->measurement_interval = $years . 'y' . $months . 'm' . $days . 'd';
+        if(isset($request->measurement_interval_days) or isset($request->measurement_interval_hours)) {
+            $days = $request->measurement_interval_days ?: 0;
+            $hours = $request->measurement_interval_hours ?: 0;
+            $sensor->measurement_interval = CarbonInterval::days($days)->hours($hours);
         }
         if(isset($request->measurement_start)) {
             $sensor->measurement_start = $request->measurement_start;
         }
         $sensor->save();
 
-         return redirect()->back()->with('success', 'Sensor was successfully updated.');
+         return redirect()->back()->with('success', ['Sensor was successfully updated.']);
      }
 }

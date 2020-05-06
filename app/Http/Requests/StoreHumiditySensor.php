@@ -27,9 +27,8 @@ class StoreHumiditySensor extends FormRequest
             'sensor_name' => 'required|alpha_num|max:255',
             'alarm_threshold' => 'nullable|integer|between:0,100',
             'notes' => 'nullable|string|max:10000',
-            'measurement_interval_years' => 'nullable|integer|between:0,99',
-            'measurement_interval_months' => 'nullable|integer|between:0,11',
             'measurement_interval_days' => 'nullable|integer|between:0,30',
+            'measurement_interval_hours' => 'nullable|integer|between:0,23',
             'measurement_start' => 'nullable|date|after_or_equal:now',
         ];
     }
@@ -45,9 +44,8 @@ class StoreHumiditySensor extends FormRequest
             'sensor_name' => 'Sensor Name',
             'alarm_threshold' => 'Alarm Threshold',
             'notes' => 'Notes',
-            'measurement_interval_years' => 'Measurement Interval Years',
-            'measurement_interval_months' => 'Measurement Interval Months',
-            'measurement_interval_days' => 'Measurement Interval Days',
+            'measurement_interval_days' => 'Measurement Interval days',
+            'measurement_interval_hours' => 'Measurement Interval hours',
             'measurement_start' => 'Measurement Start Time',
          ];
     }
