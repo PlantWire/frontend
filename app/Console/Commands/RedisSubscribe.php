@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Event;
+use App\HumidityMeasurement;
 
 class RedisSubscribe extends Command
 {
@@ -38,9 +39,13 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-        \Illuminate\Support\Facades\Redis::subscribe(['pwire-frontend'], function ($message) {
+        \Illuminate\Support\Facades\Redis::subscribe(['pwire-frontend'], function ($raw) {
+            $message = json_decode($raw);
+            if($message->type == 'HumidityMeasurementResponse') {
+                $measurement = new HumidityMeasurement($message->content->value);
+            }
             $event = new Event();
-            $event->content = utf8_encode($message->content);
+            $event->content = utf8_encode($message);
             $event->save();
             Log::info('Handled event of type '.$message->type.' from '.$message->sender);
         });
