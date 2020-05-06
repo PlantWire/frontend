@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\SensorChanged;
 
 class HumiditySensor extends Model
 {
@@ -22,7 +23,7 @@ class HumiditySensor extends Model
      */
     protected $casts = [
         'measurement_start' => 'datetime',
-        //'measurement_interval' => 'dateinterval'
+        'measurement_interval' => \App\Casts\CarbonInterval::class
     ];
 
     /**
