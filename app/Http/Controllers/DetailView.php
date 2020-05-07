@@ -12,9 +12,9 @@ use Carbon\CarbonInterval;
 
 class DetailView extends Controller
 {
-    public function view(HumiditySensor $sensor)
+    public function show(HumiditySensor $sensor)
     {
-        return view('detail-view', ['events' => Event::all(), 'sensor'=> $sensor]);
+        return view('detail-view', ['sensor'=> $sensor]);
     }
 
     public function update(HumiditySensor $sensor) {
@@ -26,15 +26,15 @@ class DetailView extends Controller
         if(isset($request->alarm_threshold)) {
             $sensor->alarm_threshold = $request->alarm_threshold;
         }
-        if(isset($request->notes)) {
-            $sensor->notes = $request->notes;
+        if($request->has('notes')) {
+            $sensor->notes = $request->notes ?: "";
         }
-        if(isset($request->measurement_interval_days) or isset($request->measurement_interval_hours)) {
+        if($request->has('measurement_interval_days') or $request->has('measurement_interval_hours')) {
             $days = $request->measurement_interval_days ?: 0;
             $hours = $request->measurement_interval_hours ?: 0;
             $sensor->measurement_interval = CarbonInterval::days($days)->hours($hours);
         }
-        if(isset($request->measurement_start)) {
+        if($request->filled('measurement_start')) {
             $sensor->measurement_start = $request->measurement_start;
         }
         $sensor->save();
