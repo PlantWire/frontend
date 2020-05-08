@@ -4,7 +4,7 @@
             <header class="card-header">
                 <p class="card-header-title">
                     {{sensor.name + " "}}
-                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'low moisture!' : 'everything is ok' }}</span>
+                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'low humidity!' : 'everything is ok' }}</span>
                 </p>
             </header>
 
@@ -31,50 +31,53 @@
 
 <script>
 
-    const max_amount_of_measurements_per_sensor_to_display = 15;
+    class MeasurementHelper {
 
-    function generateTimeAgoString(pastDate) {
-        function calculateHoursAgo(pastDate) {
-            let millisecondsPerHour = 1000 * 60 * 60;
-            let millisecondsAgo = new Date() - new Date(pastDate);
-            let hoursAgo = millisecondsAgo / millisecondsPerHour;
-            return hoursAgo;
+       // max_amount_of_measurements_per_sensor_to_display: 15,
+
+        static generateTimeAgoString(pastDate) {
+            function calculateHoursAgo(pastDate) {
+                let millisecondsPerHour = 1000 * 60 * 60;
+                let millisecondsAgo = new Date() - new Date(pastDate);
+                let hoursAgo = millisecondsAgo / millisecondsPerHour;
+                return hoursAgo;
+            }
+
+            let hours = calculateHoursAgo(pastDate);
+            let days = hours / 24;
+
+            if (days > 4) {
+                return Math.round(days) + " days ago";
+            }
+            return Math.round(hours) + " hours ago";
+         }
+
+        static lastMeasurement(measurements) {
+            return measurements.slice(-1)[0];
         }
 
-        let hours = calculateHoursAgo(pastDate);
-        let days = hours / 24;
-
-        if (days > 4) {
-            return Math.round(days) + " days ago";
+        static generateLastUpdateString(measurements) {
+            let last = this.lastMeasurement(measurements);
+            return (last === undefined) ? "never" : this.generateTimeAgoString(last.created_at)
         }
-        return Math.round(hours) + " hours ago";
-    }
 
-    function lastMeasurement(measurements) {
-        return measurements.slice(-1)[0];
-    }
+        static compareMeasurementDate(firstMeasurement, secondMeasurement) {
+            if (firstMeasurement.created_at < secondMeasurement.created_at)
+                return -1;
+            if (firstMeasurement.created_at > secondMeasurement.created_at)
+                return 1;
+            return 0;
+        }
 
-    function generateLastUpdateString(measurements) {
-        let last = lastMeasurement(measurements);
-        return (last === undefined) ? "never" : generateTimeAgoString(last.created_at)
-    }
-
-    function compareMeasurementDate(firstMeasurement, secondMeasurement) {
-        if (firstMeasurement.created_at < secondMeasurement.created_at)
-            return -1;
-        if (firstMeasurement.created_at > secondMeasurement.created_at)
-            return 1;
-        return 0;
-    }
-
-    function convertMeasurements(measurements) {
-        return measurements
-            .sort(compareMeasurementDate)
-            .slice(Math.max(measurements.length - max_amount_of_measurements_per_sensor_to_display, 0));
-    }
+        static convertMeasurements(measurements, maxAmountOfMeasurementsToDisplay) {
+            return measurements
+                .sort(this.compareMeasurementDate)
+                .slice(Math.max(measurements.length - maxAmountOfMeasurementsToDisplay, 0));
+        }
+    };
 
     export default {
-        props: ['sensor'],
+        props: ['sensor', 'maxAmountOfMeasurementsToDisplay'],
         data() {
             return {
                 chartdata: {
@@ -108,18 +111,18 @@
         },
         computed: {
             lastUpdate: function () {
-                return generateLastUpdateString(this.sensor.measurements);
+                return MeasurementHelper.generateLastUpdateString(this.sensor.measurements);
             },
             isBelowAlarmThreshold: function () {
-                let last = lastMeasurement(this.sensor.measurements);
+                let last = MeasurementHelper.lastMeasurement(this.sensor.measurements);
                 if (last === undefined) {
                     return false;
                 }
                 return this.sensor.alarm_threshold > last.value;
             },
             lastMeasurement: function () {
-                let last = lastMeasurement(this.sensor.measurements);
-                return "Moisture: " + ((last === undefined) ? "?" : last.value);
+                let last = MeasurementHelper.lastMeasurement(this.sensor.measurements);
+                return "Humidity: " + ((last === undefined) ? "?" : last.value);
             },
 
             chartData: function() {
@@ -127,13 +130,13 @@
             }
         }, mounted() {
             this.chartdata = {
-                labels: convertMeasurements(this.sensor.measurements).map(m => generateTimeAgoString(m.created_at)),
+                labels: MeasurementHelper.convertMeasurements(this.sensor.measurements).map(m => MeasurementHelper.generateTimeAgoString(m.created_at)),
                 datasets: [
                     {
-                        label: 'Moisture',
+                        label: 'Humidity',
                         backgroundColor: 'RGB(255, 255, 255, 255)',
                         borderColor: 'RGBA(32, 156, 238, .6)',
-                        data: convertMeasurements(this.sensor.measurements).map(m => m.value)
+                        data: MeasurementHelper.convertMeasurements(this.sensor.measurements, this.maxAmountOfMeasurementsToDisplay).map(m => m.value)
                     }
                 ]
             }
