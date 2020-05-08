@@ -20,7 +20,7 @@
             </div>
 
             <footer class="card-footer">
-                <a class="card-footer-item" href="#">Settings</a>
+                <a class="card-footer-item" v-bind:href="'/change-sensor/'+ sensor.id">Settings</a>
                 <a class="card-footer-item" href="#">Details</a>
                 <a class="card-footer-item" href="#">Measure Now</a>
             </footer>

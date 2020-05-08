@@ -12010,12 +12010,7 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
-#app {
-  min-height: calc(100vh - 3.5rem);
-}
-
-.login_container,
-.login_columns {
-  min-height: calc(100vh - 3.5rem);
+.card-header-title .tag {
+  margin-left: 0.75em;
 }
 
