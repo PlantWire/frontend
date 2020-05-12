@@ -33,12 +33,4 @@ class HumiditySensor extends Model
     {
         return $this->hasMany('App\HumidityMeasurement');
     }
-
-    /**
-     * Get the events of this sensor
-     */
-    public function events()
-    {
-        return $this->hasMany('App\Event');
-    }
 }
