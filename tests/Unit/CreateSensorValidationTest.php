@@ -2,12 +2,9 @@
 
 namespace Tests\Unit;
 
-use Mockery;
-use PHPUnit\Framework\TestCase;
-use Illuminate\Validation\Validator;
 use Illuminate\Contracts\Translation\MessageSelector;
 
-class CreateSensorValidationTest extends TestCase
+class CreateSensorValidationTest extends ValidationTestBase
 {
     private function createAttributes()
     {
@@ -26,18 +23,10 @@ class CreateSensorValidationTest extends TestCase
         return $rules;
     }
 
-    public function createValidator($attributes) {
-        $translatorMock = Mockery::mock('Illuminate\Contracts\Translation\Translator');
-        $translatorMock->shouldReceive([
-            'get' => '',
-        ]);
-
-        return new Validator($translatorMock, $attributes, $this->getRules());
-    }
 
     public function testFormValidationPasses()
     {
-        $validator = $this->createValidator($this->createAttributes());
+        $validator = parent::createValidator($this->createAttributes());
         $this->assertTrue($validator->passes());
     }
 
@@ -46,7 +35,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['name']='';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -54,7 +43,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a-b55z-b38150346645';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -62,7 +51,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -70,7 +59,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a-b55f-b38150346645-616eb5e7-a209-407a-b55f-b38150346645';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -78,7 +67,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='-1';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -86,7 +75,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='10000';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->fails());
     }
 
@@ -94,7 +83,7 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='9999';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->passes());
     }
 
@@ -102,7 +91,23 @@ class CreateSensorValidationTest extends TestCase
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='0';
-        $validator = $this->createValidator($attributes);
+        $validator = parent::createValidator($attributes);
         $this->assertTrue($validator->passes());
+    }
+
+    public function testNameIsAlphanumeric()
+    {
+        $attributes = $this->createAttributes();
+        $attributes['name']='H3110W0R1D';
+        $validator = parent::createValidator($attributes);
+        $this->assertTrue($validator->passes());
+    }
+
+    public function testNameDoesNotAcceptNonAlphanumericCharacters()
+    {
+        $attributes = $this->createAttributes();
+        $attributes['name']='H3110 W0R1D ^^';
+        $validator = parent::createValidator($attributes);
+        $this->assertTrue($validator->fails());
     }
 }
