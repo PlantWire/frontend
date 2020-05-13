@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Contracts\Translation\MessageSelector;
 
 class CreateSensorValidationTest extends ValidationTestBase
 {
@@ -24,14 +23,14 @@ class CreateSensorValidationTest extends ValidationTestBase
     }
 
 
-    public function testFormValidationPasses()
+    public function testCreateSensorFormValidationPasses()
     {
         $validator = parent::createValidator($this->createAttributes());
         $this->assertTrue($validator->passes());
     }
 
 
-    public function testNameIsMandatory()
+    public function testCreateSensorNameIsMandatory()
     {
         $attributes = $this->createAttributes();
         $attributes['name']='';
@@ -39,7 +38,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testUuidShouldNotContainNonHexadecimalCharacters()
+    public function testCreateSensorUuidShouldNotContainNonHexadecimalCharacters()
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a-b55z-b38150346645';
@@ -47,7 +46,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testUuidHasMinimumLength()
+    public function testCreateSensorUuidHasMinimumLength()
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a';
@@ -55,7 +54,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testUuidHasMaximumLength()
+    public function testCreateSensorUuidHasMaximumLength()
     {
         $attributes = $this->createAttributes();
         $attributes['uuid']='616eb5e7-a209-407a-b55f-b38150346645-616eb5e7-a209-407a-b55f-b38150346645';
@@ -63,7 +62,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testPinHasMinimumValue()
+    public function testCreateSensorPinHasMinimumValue()
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='-1';
@@ -71,7 +70,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testPinHasMaximumValue()
+    public function testCreateSensorPinHasMaximumValue()
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='10000';
@@ -79,7 +78,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->fails());
     }
 
-    public function testPinMaximumIsAccepted()
+    public function testCreateSensorPinMaximumIsAccepted()
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='9999';
@@ -87,7 +86,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->passes());
     }
 
-    public function testPinMinimumIsAccepted()
+    public function testCreateSensorPinMinimumIsAccepted()
     {
         $attributes = $this->createAttributes();
         $attributes['pin']='0';
@@ -95,7 +94,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->passes());
     }
 
-    public function testNameIsAlphanumeric()
+    public function testCreateSensorNameIsAlphanumeric()
     {
         $attributes = $this->createAttributes();
         $attributes['name']='H3110W0R1D';
@@ -103,7 +102,7 @@ class CreateSensorValidationTest extends ValidationTestBase
         $this->assertTrue($validator->passes());
     }
 
-    public function testNameDoesNotAcceptNonAlphanumericCharacters()
+    public function testCreateSensorNameDoesNotAcceptNonAlphanumericCharacters()
     {
         $attributes = $this->createAttributes();
         $attributes['name']='H3110 W0R1D ^^';

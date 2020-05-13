@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Contracts\Translation\MessageSelector;
 use Carbon;
 
 class StoreHumiditySensorValidationTest extends ValidationTestBase
@@ -35,7 +34,7 @@ class StoreHumiditySensorValidationTest extends ValidationTestBase
     }
 
 
-    public function testUpdatsensorNameIsMandatory()
+    public function testUpdateSensorNameIsMandatory()
     {
         $attributes = $this->createAttributes();
         $attributes['sensor_name']='';
