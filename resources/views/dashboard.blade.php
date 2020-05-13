@@ -6,18 +6,22 @@
     <section class="section">
         <div class="container">
             <div class="columns is-multiline">
+
+                @foreach ($sensors as $sensor)
+                    <measurement-display-component :sensor="{{ $sensor }}">
+                    </measurement-display-component>
+                @endforeach
+
                 @guest
-                    <welcome-text-component></welcome-text-component>
+                    @if(empty($sensors))
+                        <welcome-text-component></welcome-text-component>
+                    @endif
                 @endguest
 
                 @auth
                     @if(empty($sensors))
                         <no-sensors-text-component></no-sensors-text-component>
                     @else
-                        @foreach ($sensors as $sensor)
-                            <measurement-display-component :sensor="{{ $sensor }}">
-                            </measurement-display-component>
-                        @endforeach
                         <add-sensor-card-component></add-sensor-card-component>
                     @endif
                 @endauth
