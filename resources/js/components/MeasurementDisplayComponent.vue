@@ -4,7 +4,7 @@
             <header class="card-header">
                 <p class="card-header-title">
                     {{sensor.name + " "}}
-                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'low moisture!' : 'everything is ok' }}</span>
+                    <span :class="isBelowAlarmThreshold ? 'tag is-danger' : 'tag'">{{ isBelowAlarmThreshold ? 'low humidity!' : 'everything is ok' }}</span>
                 </p>
             </header>
 
@@ -30,34 +30,11 @@
 </template>
 
 <script>
-    function generateTimeAgoString(pastDate) {
-        function calculateHoursAgo(pastDate) {
-            let millisecondsPerHour = 1000 * 60 * 60;
-            let millisecondsAgo = new Date() - new Date(pastDate);
-            let hoursAgo = millisecondsAgo / millisecondsPerHour;
-            return hoursAgo;
-        }
 
-        let hours = calculateHoursAgo(pastDate);
-        let days = hours / 24;
-
-        if (days > 4) {
-            return Math.round(days) + " days ago";
-        }
-        return Math.round(hours) + " hours ago";
-    }
-
-    function lastMeasurement(measurements) {
-        return measurements.slice(-1)[0];
-    }
-
-    function generateLastUpdateString(measurements) {
-        let last = lastMeasurement(measurements);
-        return (last === undefined) ? "never" : generateTimeAgoString(last.created_at)
-    }
+    import { MeasurementHelper } from '../measurementHelper';
 
     export default {
-        props: ['sensor'],
+        props: ['sensor', 'maxAmountOfMeasurementsToDisplay'],
         data() {
             return {
                 chartdata: {
@@ -91,18 +68,18 @@
         },
         computed: {
             lastUpdate: function () {
-                return generateLastUpdateString(this.sensor.measurements);
+                return MeasurementHelper.generateLastUpdateString(this.sensor.measurements);
             },
             isBelowAlarmThreshold: function () {
-                let last = lastMeasurement(this.sensor.measurements);
+                let last = MeasurementHelper.lastMeasurement(this.sensor.measurements);
                 if (last === undefined) {
                     return false;
                 }
                 return this.sensor.alarm_threshold > last.value;
             },
             lastMeasurement: function () {
-                let last = lastMeasurement(this.sensor.measurements);
-                return "Moisture: " + ((last === undefined) ? "?" : last.value);
+                let last = MeasurementHelper.lastMeasurement(this.sensor.measurements);
+                return "Humidity: " + ((last === undefined) ? "?" : last.value);
             },
 
             chartData: function() {
@@ -110,13 +87,13 @@
             }
         }, mounted() {
             this.chartdata = {
-                labels: this.sensor.measurements.map(m => generateTimeAgoString(m.created_at)),
+                labels: MeasurementHelper.convertMeasurements(this.sensor.measurements).map(m => MeasurementHelper.generateTimeAgoString(m.created_at)),
                 datasets: [
                     {
-                        label: 'Moisture',
+                        label: 'Humidity',
                         backgroundColor: 'RGB(255, 255, 255, 255)',
                         borderColor: 'RGBA(32, 156, 238, .6)',
-                        data: this.sensor.measurements.map(m => m.value)
+                        data: MeasurementHelper.convertMeasurements(this.sensor.measurements, this.maxAmountOfMeasurementsToDisplay).map(m => m.value)
                     }
                 ]
             }
