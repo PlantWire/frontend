@@ -79,6 +79,7 @@
                     @foreach (session('success') as $key => $message)
                         <div class="notification is-success" role="alert">
                             {{ $message }}
+                            <button class="delete" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></button>
                         </div>
                     @endforeach
                 @endif
@@ -86,6 +87,7 @@
                     @foreach (session('warning') as $key => $message)
                         <div class="notification is-warning" role="alert">
                             {{ $message }}
+                            <button class="delete" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></button>
                         </div>
                     @endforeach
                 @endif
@@ -93,6 +95,7 @@
                     @foreach (session('error') as $key => $message)
                         <div class="notification is-danger" role="alert">
                             {{ $message }}
+                            <button class="delete" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></button>
                         </div>
                     @endforeach
                 @endif
@@ -100,6 +103,7 @@
                     @foreach (session('info') as $key => $message)
                         <div class="notification is-info" role="alert">
                             {{ $message }}
+                            <button class="delete" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></button>
                         </div>
                     @endforeach
                 @endif
