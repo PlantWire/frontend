@@ -1997,6 +1997,7 @@ var reactiveProp = vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["mixins"].reactivePr
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _measurementHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../measurementHelper */ "./resources/js/measurementHelper.js");
 //
 //
 //
@@ -2028,48 +2029,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var max_amount_of_measurements_per_sensor_to_display = 15;
-
-function generateTimeAgoString(pastDate) {
-  function calculateHoursAgo(pastDate) {
-    var millisecondsPerHour = 1000 * 60 * 60;
-    var millisecondsAgo = new Date() - new Date(pastDate);
-    var hoursAgo = millisecondsAgo / millisecondsPerHour;
-    return hoursAgo;
-  }
-
-  var hours = calculateHoursAgo(pastDate);
-  var days = hours / 24;
-
-  if (days > 4) {
-    return Math.round(days) + " days ago";
-  }
-
-  return Math.round(hours) + " hours ago";
-}
-
-function _lastMeasurement(measurements) {
-  return measurements.slice(-1)[0];
-}
-
-function generateLastUpdateString(measurements) {
-  var last = _lastMeasurement(measurements);
-
-  return last === undefined ? "never" : generateTimeAgoString(last.created_at);
-}
-
-function compareMeasurementDate(firstMeasurement, secondMeasurement) {
-  if (firstMeasurement.created_at < secondMeasurement.created_at) return -1;
-  if (firstMeasurement.created_at > secondMeasurement.created_at) return 1;
-  return 0;
-}
-
-function convertMeasurements(measurements) {
-  return measurements.sort(compareMeasurementDate).slice(Math.max(measurements.length - max_amount_of_measurements_per_sensor_to_display, 0));
-}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['sensor'],
+  props: ['sensor', 'maxAmountOfMeasurementsToDisplay'],
   data: function data() {
     return {
       chartdata: {
@@ -2104,10 +2066,10 @@ function convertMeasurements(measurements) {
   },
   computed: {
     lastUpdate: function lastUpdate() {
-      return generateLastUpdateString(this.sensor.measurements);
+      return _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].generateLastUpdateString(this.sensor.measurements);
     },
     isBelowAlarmThreshold: function isBelowAlarmThreshold() {
-      var last = _lastMeasurement(this.sensor.measurements);
+      var last = _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].lastMeasurement(this.sensor.measurements);
 
       if (last === undefined) {
         return false;
@@ -2116,9 +2078,8 @@ function convertMeasurements(measurements) {
       return this.sensor.alarm_threshold > last.value;
     },
     lastMeasurement: function lastMeasurement() {
-      var last = _lastMeasurement(this.sensor.measurements);
-
-      return "Moisture: " + (last === undefined ? "?" : last.value);
+      var last = _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].lastMeasurement(this.sensor.measurements);
+      return "Humidity: " + (last === undefined ? "?" : last.value);
     },
     chartData: function chartData() {
       return this.chartdata.datasets.data = this.sensor.measurements.map(function (m) {
@@ -2128,14 +2089,14 @@ function convertMeasurements(measurements) {
   },
   mounted: function mounted() {
     this.chartdata = {
-      labels: convertMeasurements(this.sensor.measurements).map(function (m) {
-        return generateTimeAgoString(m.created_at);
+      labels: _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].convertMeasurements(this.sensor.measurements).map(function (m) {
+        return _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].generateTimeAgoString(m.created_at);
       }),
       datasets: [{
-        label: 'Moisture',
+        label: 'Humidity',
         backgroundColor: 'RGB(255, 255, 255, 255)',
         borderColor: 'RGBA(32, 156, 238, .6)',
-        data: convertMeasurements(this.sensor.measurements).map(function (m) {
+        data: _measurementHelper__WEBPACK_IMPORTED_MODULE_0__["MeasurementHelper"].convertMeasurements(this.sensor.measurements, this.maxAmountOfMeasurementsToDisplay).map(function (m) {
           return m.value;
         })
       }]
@@ -80113,7 +80074,7 @@ var render = function() {
               _vm._v(
                 _vm._s(
                   _vm.isBelowAlarmThreshold
-                    ? "low moisture!"
+                    ? "low humidity!"
                     : "everything is ok"
                 )
               )
@@ -80147,26 +80108,136 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("footer", { staticClass: "card-footer" }, [
+        _c(
+          "a",
+          {
+            staticClass: "card-footer-item",
+            attrs: { href: "/change-sensor/" + _vm.sensor.id }
+          },
+          [_vm._v("Settings")]
+        ),
+        _vm._v(" "),
+        _c("a", { staticClass: "card-footer-item", attrs: { href: "#" } }, [
+          _vm._v("Details")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "card-footer-item", attrs: { href: "#" } }, [
+          _vm._v("Measure Now")
+        ])
+      ])
     ])
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "card-footer" }, [
-      _c("a", { staticClass: "card-footer-item", attrs: { href: "#" } }, [
-        _vm._v("Settings")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "card-footer-item", attrs: { href: "#" } }, [
-        _vm._v("Details")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "card-footer-item", attrs: { href: "#" } }, [
-        _vm._v("Measure Now")
+    return _c("div", { staticClass: "column is-full" }, [
+      _c("div", { staticClass: "column is-three-fifths is-offset-one-fifth" }, [
+        _c("h1", { staticClass: "title is-1 is-spaced has-text-centered" }, [
+          _vm._v("You have no sensors yet")
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "button is-primary is-medium is-fullwidth",
+            attrs: { href: "/create_sensor" }
+          },
+          [
+            _vm._v(
+              "\n            Click here to add your first sensor\n        "
+            )
+          ]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "column is-full" }, [
+      _c("div", { staticClass: "column is-three-fifths is-offset-one-fifth" }, [
+        _c("h1", { staticClass: "title is-1 is-spaced" }, [
+          _vm._v("Welcome to pWire!")
+        ]),
+        _vm._v(" "),
+        _c("h2", { staticClass: "subtitle is-3 is-spaced" }, [
+          _c("i", { staticClass: "fas fa-leaf" }),
+          _vm._v(
+            " Every year, countless plants and flowers die because of improper treatment.\n            "
+          ),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c("i", { staticClass: "fas fa-smile-beam" }),
+          _vm._v(" pWire wants to make your plants happy.\n            "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c("i", { staticClass: "fas fa-tint" }),
+          _vm._v(
+            " It measures the humidity in the pot so you know when to add water.\n            "
+          ),
+          _c("br"),
+          _c("br")
+        ]),
+        _vm._v(" "),
+        _c("h2", { staticClass: "subtitle is-5" }, [
+          _vm._v("\n            Please log in\n        ")
+        ])
       ])
     ])
   }
@@ -92345,7 +92416,9 @@ var map = {
 	"./components/AddSensorCardComponent.vue": "./resources/js/components/AddSensorCardComponent.vue",
 	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue",
 	"./components/HumidityLineChart.vue": "./resources/js/components/HumidityLineChart.vue",
-	"./components/MeasurementDisplayComponent.vue": "./resources/js/components/MeasurementDisplayComponent.vue"
+	"./components/MeasurementDisplayComponent.vue": "./resources/js/components/MeasurementDisplayComponent.vue",
+	"./components/NoSensorsTextComponent.vue": "./resources/js/components/NoSensorsTextComponent.vue",
+	"./components/WelcomeTextComponent.vue": "./resources/js/components/WelcomeTextComponent.vue"
 };
 
 
@@ -92691,6 +92764,186 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MeasurementDisplayComponent_vue_vue_type_template_id_63fdd39c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/NoSensorsTextComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/NoSensorsTextComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a& */ "./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NoSensorsTextComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoSensorsTextComponent.vue?vue&type=template&id=ca5ab33a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoSensorsTextComponent_vue_vue_type_template_id_ca5ab33a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/WelcomeTextComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/WelcomeTextComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WelcomeTextComponent.vue?vue&type=template&id=d876500e& */ "./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/WelcomeTextComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./WelcomeTextComponent.vue?vue&type=template&id=d876500e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WelcomeTextComponent.vue?vue&type=template&id=d876500e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WelcomeTextComponent_vue_vue_type_template_id_d876500e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/measurementHelper.js":
+/*!*******************************************!*\
+  !*** ./resources/js/measurementHelper.js ***!
+  \*******************************************/
+/*! exports provided: MeasurementHelper */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MeasurementHelper", function() { return MeasurementHelper; });
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var MeasurementHelper = /*#__PURE__*/function () {
+  function MeasurementHelper() {
+    _classCallCheck(this, MeasurementHelper);
+  }
+
+  _createClass(MeasurementHelper, null, [{
+    key: "generateTimeAgoString",
+    // max_amount_of_measurements_per_sensor_to_display: 15,
+    value: function generateTimeAgoString(pastDate) {
+      function calculateHoursAgo(pastDate) {
+        var millisecondsPerHour = 1000 * 60 * 60;
+        var millisecondsAgo = new Date() - new Date(pastDate);
+        var hoursAgo = millisecondsAgo / millisecondsPerHour;
+        return hoursAgo;
+      }
+
+      var hours = calculateHoursAgo(pastDate);
+      var days = hours / 24;
+
+      if (days > 4) {
+        return Math.round(days) + " days ago";
+      }
+
+      return Math.round(hours) + " hours ago";
+    }
+  }, {
+    key: "lastMeasurement",
+    value: function lastMeasurement(measurements) {
+      return measurements.slice(-1)[0];
+    }
+  }, {
+    key: "generateLastUpdateString",
+    value: function generateLastUpdateString(measurements) {
+      var last = this.lastMeasurement(measurements);
+      return last === undefined ? "never" : this.generateTimeAgoString(last.created_at);
+    }
+  }, {
+    key: "compareMeasurementDate",
+    value: function compareMeasurementDate(firstMeasurement, secondMeasurement) {
+      if (firstMeasurement.created_at < secondMeasurement.created_at) return -1;
+      if (firstMeasurement.created_at > secondMeasurement.created_at) return 1;
+      return 0;
+    }
+  }, {
+    key: "convertMeasurements",
+    value: function convertMeasurements(measurements, maxAmountOfMeasurementsToDisplay) {
+      return measurements.sort(this.compareMeasurementDate).slice(Math.max(measurements.length - maxAmountOfMeasurementsToDisplay, 0));
+    }
+  }]);
+
+  return MeasurementHelper;
+}();
+;
 
 /***/ }),
 

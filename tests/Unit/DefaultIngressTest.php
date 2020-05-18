@@ -12,7 +12,9 @@ class DefaultIngressTest extends TestCase
     const validInput = '{"type": "aType", "sender": "a uuid or a string", "content": []}';
     const invalidJson = '{type: "aType", sender: "a uuid or a string", content: {}';
     const missingFields = '{type: "aType", content: {}}';
-    const validOutput = '{"type": "default", "sender": "a uuid or a string", "reciever": "frontend", "content": []}';
+    const validOutput = '{"type":"default","sender":"a uuid or a string","reciever":"frontend","content":[]}';
+
+    use RefreshDatabase;
 
     public function testAcceptsCorrectInput()
     {
@@ -48,7 +50,6 @@ class DefaultIngressTest extends TestCase
         $ingress->parse($this::validInput);
         $ingress->run();
         $this->assertDatabaseHas('events', [
-            'type' => 'default',
             'content' => $this::validOutput
         ]);
     }

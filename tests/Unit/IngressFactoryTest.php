@@ -13,6 +13,6 @@ class IngressFactoryTest extends TestCase
     public function testReturnsDefaultFactoryOnBogusInput()
     {
         $factory = new InterpreterFactory();
-        $this->assertInstanceOf(App\Interpreters\DefaultInterpreter::class, $factory->make('SuperAwesome'));
+        $this->assertInstanceOf(\App\Interpreters\DefaultInterpreter::class, $factory->make('SuperAwesome'));
     }
 }
