@@ -7,3 +7,11 @@
 .card-header-title .tag {
     margin-left: 0.75em;
 }
+
+.notification a.close {
+    text-decoration: none !important;
+    font-weight: bold;
+    position: absolute;
+    top: 18px;
+    right: 20px;
+}
