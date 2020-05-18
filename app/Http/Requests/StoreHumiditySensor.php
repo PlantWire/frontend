@@ -45,8 +45,10 @@ class StoreHumiditySensor extends FormRequest
         $validator->after(function ($validator) {
             if ((!$this->has('measurement_interval_days') || $this->input('measurement_interval_days') == 0)
                 && (!$this->has('measurement_interval_hours') || $this->input('measurement_interval_hours') == 0)) {
-                $validator->errors()->add('measurement_interval_hours',
-                    'Measurement Interval days and Measurement Interval hours cannot both be empty or 0.');
+                $validator->errors()->add('measurement_interval_hours', __('validation.not_both_zero_or_empty', [
+                    'first' =>  __('Measurement Interval days'),
+                    'second' => __('Measurement Interval hours')
+                ]));
             }
         });
     }
