@@ -17,11 +17,25 @@
                     Last update: {{lastUpdate}}
                     <br>
                 </div>
+                <div class="modal" v-bind:class="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">{{sensor.name}}</p>
+                                <button class="delete" aria-label="close" v-on:click="modal['is-active'] = false"></button>
+                            </header>
+                            <section class="modal-card-body">
+                              <humidity-line-chart :chartData="chartdata" :options="options"></humidity-line-chart>
+                            </section>
+                          </div>
+                    </div>
+                </div>
             </div>
 
             <footer class="card-footer">
                 <a class="card-footer-item" v-bind:href="'/change-sensor/'+ sensor.id">Settings</a>
-                <a class="card-footer-item" href="#">Details</a>
+                <a class="card-footer-item" v-on:click="modal['is-active'] = true">Enlarge</a>
                 <a class="card-footer-item" href="#">Measure Now</a>
             </footer>
 
@@ -37,6 +51,9 @@
         props: ['sensor', 'maxAmountOfMeasurementsToDisplay'],
         data() {
             return {
+                modal: {
+                    "is-active": false
+                },
                 chartdata: {
                     labels: undefined, //replaced when mounted() ist called
                     datasets: undefined
