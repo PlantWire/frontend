@@ -15,4 +15,16 @@ class IngressFactoryTest extends TestCase
         $factory = new InterpreterFactory();
         $this->assertInstanceOf(\App\Interpreters\DefaultInterpreter::class, $factory->make('SuperAwesome'));
     }
+
+    public function testReturnsFactoryLowercase()
+    {
+        $factory = new InterpreterFactory();
+        $this->assertInstanceOf(\App\Interpreters\LogInterpreter::class, $factory->make('log'));
+    }
+
+    public function testReturnsFactoryUppercase()
+    {
+        $factory = new InterpreterFactory();
+        $this->assertInstanceOf(\App\Interpreters\LogInterpreter::class, $factory->make('Log'));
+    }
 }

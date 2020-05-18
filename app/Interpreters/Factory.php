@@ -13,7 +13,7 @@ class InterpreterFactory {
      * @return [Interpreter]              The correct interpreter or a Default interpreter
      */
     public function make ($packageType) {
-        $className = '\\App\\Interpreters\\' . $packageType;
+        $className = '\\App\\Interpreters\\' . ucfirst($packageType) . 'Interpreter';
 
         if (class_exists( $className )) {
             return new $className();

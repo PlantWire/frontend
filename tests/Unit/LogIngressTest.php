@@ -5,48 +5,48 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Interpreters\DefaultInterpreter;
+use App\Interpreters\LogInterpreter;
 
-class DefaultIngressTest extends TestCase
+class LogIngressTest extends TestCase
 {
-    const validInput = '{"Type": "aType", "sender": "a uuid or a string", "Content": []}';
-    const invalidJson = '{type: "aType", sender: "a uuid or a string", content: {}';
-    const missingFields = '{type: "aType", content: {}}';
-    const validOutput = '{"type":"default","sender":"a uuid or a string","reciever":"frontend","content":[]}';
+    const validInput = '{"Type": "log","Sender": "uuid","Content": {"LogType": "warn","Message": "This is a test message"}}';
+    const invalidJson = '{Type:"log",Sender:"uuid",Content:{LogType:"warn",Message:"This is a test message"}';
+    const missingFields = '{Type:"log",Sender:"uuid",Content:{LogType:"warn"}}';
+    const validOutput = '{"type":"log","sender":"uuid","reciever":"frontend","content":{"logType":"warn","message":"This is a test message"}}';
 
     use RefreshDatabase;
 
     public function testAcceptsCorrectInput()
     {
-        $ingress = new DefaultInterpreter();
+        $ingress = new LogInterpreter();
         $ingress->parse($this::validInput);
         $this->assertTrue($ingress->isValid());
     }
 
     public function testRefusesInvalidJson()
     {
-        $ingress = new DefaultInterpreter();
+        $ingress = new LogInterpreter();
         $ingress->parse($this::invalidJson);
         $this->assertFalse($ingress->isValid);
     }
 
     public function testRefusesIncompletePackets()
     {
-        $ingress = new DefaultInterpreter();
+        $ingress = new LogInterpreter();
         $ingress->parse($this::missingFields);
         $this->assertFalse($ingress->isValid);
     }
 
     public function testReturnsCorrectJson()
     {
-        $ingress = new DefaultInterpreter();
+        $ingress = new LogInterpreter();
         $ingress->parse($this::validInput);
         $this->assertJsonStringEqualsJsonString($this::validOutput, $ingress->toJson());
     }
 
     public function testCreatesEventOnRun()
     {
-        $ingress = new DefaultInterpreter();
+        $ingress = new LogInterpreter();
         $ingress->parse($this::validInput);
         $ingress->run();
         $this->assertDatabaseHas('events', [
