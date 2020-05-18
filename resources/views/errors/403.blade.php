@@ -1,5 +1,5 @@
 @extends('layouts.errors')
-@section('title', __('Not Found'))
+@section('title', __('Forbidden'))
 @section('content')
 <div class="flex-center position-ref full-height">
     <div class="column is-full">
