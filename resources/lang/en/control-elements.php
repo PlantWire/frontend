@@ -15,6 +15,6 @@ return [
 
     'return_to_dashboard' => 'Return to Dashboard',
     'save_changes' => 'Save Changes',
-    'no_changes_when_empty' => 'leave empty to not change the current :value_name',
+    'no_changes_when_empty' => 'Leave empty to not change the current :value_name.',
 
 ];
