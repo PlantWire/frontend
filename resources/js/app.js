@@ -28,3 +28,20 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const app = new Vue({
     el: '#app',
 });
+
+/**
+ * Register Eventhandler for menubar
+ */
+[...document.getElementsByClassName('navbar-burger')].forEach((element) => {
+    element.addEventListener('click', toggleMenu);
+    element.addEventListener('touched', toggleMenu);
+});
+
+function toggleMenu(event) {
+    let target = event.target;
+    target.setAttribute('aria-expanded', !(target.getAttribute('aria-expanded') == 'true'));
+    target.classList.toggle('is-active');
+    [...target.parentElement.parentElement.getElementsByClassName('navbar-menu')].forEach((menu) => {
+        menu.classList.toggle('is-active');
+    })
+}
