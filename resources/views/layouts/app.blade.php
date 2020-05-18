@@ -46,9 +46,6 @@
                                 </a>
                             </div>
                         </div>
-                        <a class="navbar-item" href="/create_sensor">
-                            Add Sensor
-                         </a>
                     @endauth
                 </div>
 

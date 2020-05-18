@@ -8,7 +8,7 @@
             <div class="columns is-multiline">
 
                 @foreach ($sensors as $sensor)
-                    <measurement-display-component :sensor="{{ $sensor }}">
+                    <measurement-display-component :sensor="{{ $sensor }}" :max-amount-of-measurements-to-display="{{ $maxAmountOfMeasurementsToDisplay }}">
                     </measurement-display-component>
                 @endforeach
 
@@ -29,3 +29,4 @@
         </div>
     </section>
 @endsection
+
