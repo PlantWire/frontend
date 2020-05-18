@@ -53,7 +53,7 @@
                 </div>
 
                <div class="field is-grouped is-grouped-right">
-                    <input type="submit" value="{{ __('Search Sensor...') }}" class="button is-primary"/>
+                    <input type="submit" value="{{ __('Save') }}" class="button is-primary"/>
                </div>
 
             </form>
