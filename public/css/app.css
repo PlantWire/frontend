@@ -12014,3 +12014,13 @@ label.panel-block:hover {
   margin-left: 0.75em;
 }
 
+.textarea,
+.input {
+  vertical-align: middle;
+}
+
+.input[type=number],
+.input[type=datetime-local] {
+  width: auto;
+}
+

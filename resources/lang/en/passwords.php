@@ -22,5 +22,5 @@ return [
     'old' => "Old Password",
     'new' => "New Password",
     'new_repeat' => "Repeat new Password",
-    'leave_empty' => "Leave empty to keep password."
+    'password_complexity_insufficient' => 'Passwords must use at least three character types. Your password contained :existing_types but not :missing_types.',
 ];
