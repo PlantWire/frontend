@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}" />
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script> function closeNotification(notification) {
+            notification.parentNode.removeChild(notification.parentNode);
+        }</script>
         <title>pWire - @yield('title')</title>
     </head>
     <body>
@@ -79,6 +82,7 @@
                     @foreach (session('success') as $key => $message)
                         <div class="notification is-success" role="alert">
                             {{ $message }}
+                            <a  class="close" onclick="closeNotification(this); return false;">X</a>
                         </div>
                     @endforeach
                 @endif
