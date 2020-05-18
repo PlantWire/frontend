@@ -37,6 +37,22 @@ class DefaultIngressTest extends TestCase
         $this->assertFalse($ingress->isValid);
     }
 
+    public function testThrowsOnInvalidRun()
+    {
+        $ingress = new DefaultInterpreter();
+        $ingress->parse($this::missingFields);
+        $this->expectException(UnexpectedValueException::class);
+        $ingress->run();
+    }
+
+    public function testThrowsOnInvalidtoJson()
+    {
+        $ingress = new DefaultInterpreter();
+        $ingress->parse($this::missingFields);
+        $this->expectException(UnexpectedValueException::class);
+        $ingress->toJson();
+    }
+
     public function testReturnsCorrectJson()
     {
         $ingress = new DefaultInterpreter();

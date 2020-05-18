@@ -22,7 +22,7 @@ class DefaultInterpreter implements Interpreter {
                 return;
             }
         }
-        //Log::Info('Error Parsing message via DefaultInterpreter', ['packet' => $raw]);
+        Log::Info('Error Parsing message via DefaultInterpreter', ['packet' => $raw]);
     }
 
     public function isValid() : bool {
@@ -30,17 +30,25 @@ class DefaultInterpreter implements Interpreter {
     }
 
     public function toJson() : string {
-        return json_encode([
-            'type' => 'default',
-            'sender' => $this->sender,
-            'reciever' => $this->reciever,
-            'content' => $this->content
-        ]);
+        if($this->$isValid) {
+            return json_encode([
+                'type' => 'default',
+                'sender' => $this->sender,
+                'reciever' => $this->reciever,
+                'content' => $this->content
+            ]);
+        } else {
+            throw new Exception('cannot convert invalid packet');
+        }
     }
 
     public function run() : void {
-        $event = new Event();
-        $event->content = $this->toJson();
-        $event->save();
+        if($this->$isValid) {
+            $event = new Event();
+            $event->content = $this->toJson();
+            $event->save();
+        } else {
+            throw new Exception('cannot execute invalid packet logic');
+        }
     }
 }

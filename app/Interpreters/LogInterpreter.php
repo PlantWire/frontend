@@ -25,10 +25,14 @@ class LogInterpreter implements Interpreter {
                 $innerPacket = array_change_key_case($packet['content']);
 
                 if(array_key_exists('logtype', $innerPacket) && array_key_exists('message', $innerPacket)) {
-                    $this->content['logType'] = $innerPacket['logtype'];
-                    $this->content['message'] = $innerPacket['message'];
-                    $this->isValid = true;
-                    return;
+                    if(in_array($innerPacket['logtype'], ['info', 'warn', 'err'])) {
+                        $this->content['logType'] = $innerPacket['logtype'];
+                        $this->content['message'] = $innerPacket['message'];
+                        $this->isValid = true;
+                        return;
+                    } else {
+                        Log::Info('Recieved Log packet with unknown log level', ['packet' => $raw]);
+                    }
                 }
             }
         }
@@ -40,17 +44,25 @@ class LogInterpreter implements Interpreter {
     }
 
     public function toJson() : string {
-        return json_encode([
-            'type' => 'log',
-            'sender' => $this->sender,
-            'reciever' => $this->reciever,
-            'content' => $this->content
-        ]);
+        if($this->$isValid) {
+            return json_encode([
+                'type' => 'log',
+                'sender' => $this->sender,
+                'reciever' => $this->reciever,
+                'content' => $this->content
+            ]);
+        } else {
+            throw new Exception('cannot convert invalid packet');
+        }
     }
 
     public function run() : void {
-        $event = new Event();
-        $event->content = $this->toJson();
-        $event->save();
+        if($this->$isValid) {
+            $event = new Event();
+            $event->content = $this->toJson();
+            $event->save();
+        } else {
+            throw new Exception('cannot execute invalid packet logic');
+        }
     }
 }
