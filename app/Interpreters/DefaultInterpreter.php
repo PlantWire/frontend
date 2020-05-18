@@ -30,7 +30,7 @@ class DefaultInterpreter implements Interpreter {
     }
 
     public function toJson() : string {
-        if($this->$isValid) {
+        if($this->isValid) {
             return json_encode([
                 'type' => 'default',
                 'sender' => $this->sender,
@@ -38,17 +38,17 @@ class DefaultInterpreter implements Interpreter {
                 'content' => $this->content
             ]);
         } else {
-            throw new Exception('cannot convert invalid packet');
+            throw new \UnexpectedValueException('cannot convert invalid packet');
         }
     }
 
     public function run() : void {
-        if($this->$isValid) {
+        if($this->isValid) {
             $event = new Event();
             $event->content = $this->toJson();
             $event->save();
         } else {
-            throw new Exception('cannot execute invalid packet logic');
+            throw new \UnexpectedValueException('cannot execute invalid packet logic');
         }
     }
 }

@@ -41,7 +41,7 @@ class DefaultIngressTest extends TestCase
     {
         $ingress = new DefaultInterpreter();
         $ingress->parse($this::missingFields);
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $ingress->run();
     }
 
@@ -49,7 +49,7 @@ class DefaultIngressTest extends TestCase
     {
         $ingress = new DefaultInterpreter();
         $ingress->parse($this::missingFields);
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $ingress->toJson();
     }
 

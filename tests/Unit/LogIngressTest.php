@@ -35,7 +35,7 @@ class LogIngressTest extends TestCase
     {
         $ingress = new LogInterpreter();
         $ingress->parse($this::missingFields);
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $ingress->run();
     }
 
@@ -43,7 +43,7 @@ class LogIngressTest extends TestCase
     {
         $ingress = new LogInterpreter();
         $ingress->parse($this::missingFields);
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $ingress->toJson();
     }
 
