@@ -47,7 +47,7 @@
                         <i class="fas fa-lock"></i>
                     </span>
                 </p>
-                @error('old:password')
+                @error('old_password')
                     <span class="help is-danger" role="alert">
                         {{ $message }}
                     </span>
