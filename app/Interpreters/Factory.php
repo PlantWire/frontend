@@ -12,7 +12,7 @@ class InterpreterFactory {
      * @param  [string] $packageType package type as in the transmitted packet
      * @return [Interpreter]              The correct interpreter or a Default interpreter
      */
-    public function make ($packageType) {
+    public static function make ($packageType) {
         $className = '\\App\\Interpreters\\' . ucfirst($packageType) . 'Interpreter';
 
         if (class_exists( $className )) {

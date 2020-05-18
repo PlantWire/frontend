@@ -13,7 +13,7 @@ class LogIngressTest extends TestCase
     const invalidLogType = '{"Type": "log","Sender": "uuid","Content": {"LogType": "exception","Message": "This is a test message"}}';
     const invalidJson = '{Type:"log",Sender:"uuid",Content:{LogType:"warn",Message:"This is a test message"}';
     const missingFields = '{Type:"log",Sender:"uuid",Content:{LogType:"warn"}}';
-    const validOutput = '{"type":"log","sender":"uuid","reciever":"frontend","content":{"logType":"warn","message":"This is a test message"}}';
+    const validOutput = '{"type":"Log","sender":"uuid","target":"frontend","content":{"logType":"warn","message":"This is a test message"}}';
 
     use RefreshDatabase;
 
@@ -76,5 +76,13 @@ class LogIngressTest extends TestCase
         $this->assertDatabaseHas('events', [
             'content' => $this::validOutput
         ]);
+    }
+
+    public function testStatusResetAfterSecondParse()
+    {
+        $ingress = new LogInterpreter();
+        $ingress->parse($this::validInput);
+        $ingress->parse($this::invalidJson);
+        $this->assertFalse($ingress->isValid);
     }
 }

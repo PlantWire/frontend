@@ -15,6 +15,7 @@ class LogInterpreter implements Interpreter {
     public $reciever = 'frontend';
 
     public function parse(string $raw) : void {
+        $this->isValid = false;
         $decoded = json_decode($raw, JSON_OBJECT_AS_ARRAY);
         if($decoded != null) {
 
@@ -46,9 +47,9 @@ class LogInterpreter implements Interpreter {
     public function toJson() : string {
         if($this->isValid) {
             return json_encode([
-                'type' => 'log',
+                'type' => 'Log',
                 'sender' => $this->sender,
-                'reciever' => $this->reciever,
+                'target' => $this->reciever,
                 'content' => $this->content
             ]);
         } else {
