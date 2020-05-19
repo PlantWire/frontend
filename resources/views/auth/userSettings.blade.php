@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'User settings')
+
 @section('content')
 <div class="container">
     <div class="box is-vcentered is-centered">
