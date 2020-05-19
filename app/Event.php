@@ -14,12 +14,4 @@ class Event extends Model
     protected $fillable = [
         'content',
     ];
-
-    /**
-     * Get the sensor this event belongs to
-     */
-    public function sensor()
-    {
-        return $this->belongsTo('App\HumiditySensor');
-    }
 }

@@ -16,7 +16,6 @@ class UpdateEvents extends Migration
         Schema::dropIfExists('events');
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sensor_id')->references('id')->on('humidity_sensors');
             $table->json('content');
             $table->timestamps();
         });

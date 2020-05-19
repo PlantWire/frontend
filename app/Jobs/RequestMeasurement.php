@@ -8,7 +8,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use Redis;
+use App\HumiditySensor;
+use Illuminate\Support\Facades\Redis;
 
 class RequestMeasurement implements ShouldQueue
 {
@@ -35,10 +36,10 @@ class RequestMeasurement implements ShouldQueue
     {
         $request = [
             'Type' => 'HumidityMeasurementRequest',
-            'Target' => $sensor->uuid,
-            'Sender' => env('LORA_UUID'),
+            'Target' => $this->sensor->uuid,
+            'Sender' => 'Frontend',
             'Content' => []
         ];
-        Redis::publish('pwire-server', $request);
+        Redis::publish('pwire-server', json_encode($request));
     }
 }

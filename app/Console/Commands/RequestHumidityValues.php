@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\HumiditySensor;
 use Carbon\Carbon;
+
+use App\HumiditySensor;
+use App\Jobs\RequestMeasurement;
 
 class RequestHumidityValues extends Command
 {
@@ -40,9 +42,9 @@ class RequestHumidityValues extends Command
     public function handle()
     {
         HumiditySensor::all()->each(function($sensor) {
-            $elapsed_seconds = now()->diff($sensor->measurement_start)->totalSeconds();
-            $interval_seconds = $sensor->measurement_interval->seconds;
-            if($elapsed_time % $interval_seconds > -60 || $elapsed_time % $interval_seconds < 60) {
+            $elapsed_seconds = now()->diffInSeconds($sensor->measurement_start);
+            $interval_seconds = $sensor->measurement_interval->totalSeconds;
+            if($elapsed_seconds % $interval_seconds > -60 || $elapsed_seconds % $interval_seconds < 60) {
                 RequestMeasurement::dispatch($sensor);
             }
         });
