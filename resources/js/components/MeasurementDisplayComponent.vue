@@ -17,11 +17,25 @@
                     Last update: {{lastUpdate}}
                     <br>
                 </div>
+                <div class="modal" v-bind:class="modal.state">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">{{sensor.name}}</p>
+                                <button class="delete" aria-label="close" v-on:click="modal.state['is-active'] = false"></button>
+                            </header>
+                            <section class="modal-card-body">
+                              <humidity-line-chart :chartData="modal.chartdata" :options="{}"></humidity-line-chart>
+                            </section>
+                          </div>
+                    </div>
+                </div>
             </div>
 
             <footer class="card-footer">
                 <a class="card-footer-item" v-bind:href="'/change-sensor/'+ sensor.id">Settings</a>
-                <a class="card-footer-item" href="#">Details</a>
+                <a class="card-footer-item" v-on:click="modal.state['is-active'] = true">Enlarge</a>
                 <a class="card-footer-item" href="#">Measure Now</a>
             </footer>
 
@@ -37,6 +51,12 @@
         props: ['sensor', 'maxAmountOfMeasurementsToDisplay'],
         data() {
             return {
+                modal: {
+                    state: {
+                        "is-active": false
+                    },
+                    chartdata: undefined,
+                },
                 chartdata: {
                     labels: undefined, //replaced when mounted() ist called
                     datasets: undefined
@@ -94,6 +114,17 @@
                         backgroundColor: 'RGB(255, 255, 255, 255)',
                         borderColor: 'RGBA(32, 156, 238, .6)',
                         data: MeasurementHelper.convertMeasurements(this.sensor.measurements, this.maxAmountOfMeasurementsToDisplay).map(m => m.value)
+                    }
+                ]
+            },
+            this.modal.chartdata = {
+                labels: MeasurementHelper.convertMeasurements(this.sensor.measurements).map(m => MeasurementHelper.generateTimeAgoString(m.created_at)),
+                datasets: [
+                    {
+                        label: 'Humidity',
+                        backgroundColor: 'RGB(255, 255, 255, 255)',
+                        borderColor: 'RGBA(32, 156, 238, .6)',
+                        data: MeasurementHelper.convertMeasurements(this.sensor.measurements, this.sensor.measurements.length).map(m => m.value)
                     }
                 ]
             }
