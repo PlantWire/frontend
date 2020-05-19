@@ -20,6 +20,7 @@ Route::post('/store_sensor', 'SensorController@store')->name('store_sensor');
 Route::redirect('/change-sensor/', '/');
 Route::get('/change-sensor/{sensor}', 'DetailView@update')->name('change-sensor');
 Route::post('/store/{sensor}', 'DetailView@store');
+Route::get('/measure/{sensor}', 'SensorController@measure');
 
 // Authentification
 Auth::routes();
