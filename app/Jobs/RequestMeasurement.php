@@ -35,10 +35,10 @@ class RequestMeasurement implements ShouldQueue
     public function handle()
     {
         $request = [
-            'Type' => 'HumidityMeasurementRequest',
-            'Target' => $this->sensor->uuid,
-            'Sender' => 'frontend',
-            'Content' => []
+            'type' => 'HumidityMeasurementRequest',
+            'target' => $this->sensor->uuid,
+            'sender' => 'frontend',
+            'content' => []
         ];
         Redis::publish('pwire-server', json_encode($request));
     }
