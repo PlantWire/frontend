@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Interpreters\Factory;
+use App\Interpreters\InterpreterFactory;
+use Log;
 
 class RedisSubscribe extends Command
 {
@@ -44,19 +45,20 @@ class RedisSubscribe extends Command
                 $this->info("Recieved Package");
                 $message = json_decode($raw);
                 if($message != null) {
-                    $interpreter = Factory::make($packageType);
+                    dd($message);
+                    $interpreter = InterpreterFactory::make($message->type);
                     $interpreter->parse($raw);
                     if($interpreter->isValid()) {
                         $interpreter->run();
+                        $this->info('Handled event of type '.$message->type.' from '.$message->sender);
                         Log::info('Handled event of type '.$message->type.' from '.$message->sender);
                     }
                 }
                 $this->info('Finished Processing');
             });
-        } catch (Exception $error) {
+        } catch (RedisException $error) {
             $this->error('Redis connection timed out');
             return -1;
         }
-
     }
 }

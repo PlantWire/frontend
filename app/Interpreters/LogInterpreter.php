@@ -27,7 +27,7 @@ class LogInterpreter implements Interpreter {
 
                 if(array_key_exists('logtype', $innerPacket) && array_key_exists('message', $innerPacket)) {
                     if(in_array($innerPacket['logtype'], ['info', 'warn', 'err'])) {
-                        $this->content['logType'] = $innerPacket['logtype'];
+                        $this->content['logtype'] = $innerPacket['logtype'];
                         $this->content['message'] = $innerPacket['message'];
                         $this->isValid = true;
                         return;
