@@ -45,7 +45,6 @@ class RedisSubscribe extends Command
                 $this->info("Recieved Package");
                 $message = json_decode($raw);
                 if($message != null) {
-                    dd($message);
                     $interpreter = InterpreterFactory::make($message->type);
                     $interpreter->parse($raw);
                     if($interpreter->isValid()) {
