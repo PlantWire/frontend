@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\HumiditySensor;
 use App\Http\Requests\StoreSensorRequest;
 use Carbon\CarbonInterval;
+use Redirect;
+
+use App\Jobs\RequestMeasurement;
 
 class SensorController extends Controller
 {
@@ -33,5 +36,10 @@ class SensorController extends Controller
 
         $newSensorId =  $humiditySensor->id;
         return redirect()->action('DetailView@update', ['sensor' => $humiditySensor->id])->with('success', [__('New Sensor added successfully. You can add more details here')]);
+    }
+
+    public function measure(HumiditySensor $sensor) {
+        RequestMeasurement::dispatch($sensor);
+        return Redirect::back()->with('info', [__('humidity-sensor.measurement_requested', ['sensor_name' => $sensor->name])]);
     }
 }
