@@ -118,6 +118,7 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'not_both_zero_or_empty' => ':first and :second cannot both be empty or 0.',
+    'saved' => ':attribute was saved.',
 
     /*
     |--------------------------------------------------------------------------

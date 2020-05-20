@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HumiditySensorsTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(HumidityMeasurementsTableSeeder::class);
+        $this->call(SettingsSeeder::class);
     }
 }

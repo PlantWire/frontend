@@ -21,6 +21,9 @@ Route::redirect('/change-sensor/', '/');
 Route::get('/change-sensor/{sensor}', 'DetailView@update')->name('change-sensor');
 Route::post('/store/{sensor}', 'DetailView@store');
 
+Route::get('/settings', 'PlatformController@index')->name('platform_settings');
+Route::post('/settings', 'PlatformController@store');
+
 // Authentification
 Auth::routes();
 Route::get('/user/{user}', 'UserController@index')->name('edit_user');

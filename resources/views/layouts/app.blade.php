@@ -41,7 +41,7 @@
                                 <a class="navbar-item" href="{{route('edit_user', Auth::user())}}">
                                     User Settings
                                 </a>
-                                <a class="navbar-item">
+                                <a class="navbar-item" href="{{route('platform_settings')}}">
                                     Plattform Settings
                                 </a>
                             </div>

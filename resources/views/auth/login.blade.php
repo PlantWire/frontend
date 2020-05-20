@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Login')
+
 @section('content')
 <div class="login_container container">
     <div class="login_columns columns is-one-third is-vcentered is-centered">
