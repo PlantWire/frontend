@@ -29,3 +29,6 @@ Route::post('/settings', 'PlatformController@store');
 Auth::routes();
 Route::get('/user/{user}', 'UserController@index')->name('edit_user');
 Route::post('/user/{user}', 'UserController@store')->name('store_user');
+
+// Logs
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

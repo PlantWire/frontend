@@ -21,3 +21,13 @@
 .input[type=number], .input[type=datetime-local] {
     width: auto;
 }
+
+tr.error td:first-child {
+    background-color: $red;
+    color: $white;
+}
+
+tr.info td:first-child {
+    background-color: $blue;
+    color: white;
+}
