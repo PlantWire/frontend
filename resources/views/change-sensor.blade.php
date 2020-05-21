@@ -137,10 +137,19 @@
                 @endauth
             </div>
             <div class="field is-grouped is-grouped-right">
-                <a href="/" class="button">{{ __('control-elements.return_to_dashboard') }}</a>&nbsp;
+                <p class="control">
+                    <a href="/" class="button">{{ __('control-elements.return_to_dashboard') }}</a>
+                </p>
                 @auth
-                    <input class="button is-primary" id="submit" type="submit"
-                        value="{{ __('control-elements.save_changes') }}">
+                    <p class="control">
+                        <a  class="button is-danger" href="{{route('destroy-sensor', ['sensor' => $sensor]) }}">
+                            {{ __('control-elements.delete') }}
+                        </a>
+                    </p>
+                    <p class="control">
+                        <input class="button is-primary" id="submit" type="submit"
+                            value="{{ __('control-elements.save_changes') }}">
+                    </p>
                 @endauth
             </div>
         </form>

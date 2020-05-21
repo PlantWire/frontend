@@ -19,6 +19,7 @@ Route::get('/create_sensor', 'SensorController@create')->name('create_sensor');
 Route::post('/store_sensor', 'SensorController@store')->name('store_sensor');
 Route::redirect('/change-sensor/', '/');
 Route::get('/change-sensor/{sensor}', 'DetailView@update')->name('change-sensor');
+Route::get('/delete-sensor/{sensor}', 'DetailView@destroy')->name('destroy-sensor');
 Route::post('/store/{sensor}', 'DetailView@store');
 Route::get('/measure/{sensor}', 'SensorController@measure');
 
