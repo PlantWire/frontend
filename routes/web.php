@@ -22,6 +22,6 @@ Route::resource('/settings', 'SettingsController')->only(['index', 'store']);
 Route::resource('/user', 'UserController')->only('store', 'edit', 'update');
 
 // Authentification
-Auth::routes();
+//Auth::routes();
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('auth')->name('logs');

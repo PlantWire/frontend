@@ -28,8 +28,8 @@
                     </a>
 
                     @auth
-                        <a class="navbar-item">
-                            Event Log
+                        <a class="navbar-item" href="{{ route('logs') }}">
+                            Log
                         </a>
 
                         <div class="navbar-item has-dropdown is-hoverable">

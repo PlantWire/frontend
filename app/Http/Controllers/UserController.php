@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
 use Hash;
+use Auth;
+use Redirect;
 
 use App\User;
 
@@ -13,7 +15,8 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+
+        $this->middleware('auth', ['except' => ['store']]);
     }
 
     /**
@@ -44,7 +47,15 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
+        Auth::login($user);
+
+        return Redirect::route('dashboard')->with('success', [__('Welcome abord!')]);
     }
 
     /**
@@ -87,7 +98,7 @@ class UserController extends Controller
             $messages->push(__('passwords.reset'));
         }
         $user->save();
-        return redirect()->back()->with('success', $messages);
+        return Redirect::back()->with('success', $messages);
     }
 
     /**

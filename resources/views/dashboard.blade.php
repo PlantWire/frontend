@@ -32,7 +32,8 @@
                                 <h2 class="subtitle is-5">
                                     @if($freshInstall)
                                         <h1 class="title">Setup</h1>
-                                        <form action="route('user.store')" method="POST">
+                                        <form action="{{route('user.store')}}" method="POST">
+                                            @csrf
                                             <div class="field">
                                                 <label class="label">{{ __('Your Name') }}</label>
                                                 <div class="control">
@@ -62,6 +63,16 @@
                                                     <p class="help is-danger" role="alert">{{$message}}</p>
                                                 @enderror
                                             </div>
+
+                                            <div class="field">
+                                                <label class="label">{{ __('Password confirmation') }}</label>
+                                                <div class="control">
+                                                    <input class="input" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}">
+                                                </div>
+                                                @error ('password_confirmation')
+                                                    <p class="help is-danger" role="alert">{{$message}}</p>
+                                                @enderror
+                                            </div>
                                             <div class="control">
                                                 <input type="submit" class="button is-fullwidth is-primary"  value="{{ __("Let's Go!") }}"/>
                                             </div>
@@ -72,7 +83,6 @@
                                 </h2>
                             </div>
                         </div>
-
                     @endif
                 @endguest
 
