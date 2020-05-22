@@ -22,8 +22,8 @@ unit_test:
     - php artisan key:generate
     - php artisan migrate
     - vendor/bin/phpunit --coverage-text --colors=never
-    - npm install --save-dev jest
-    - npm run build
+    - npm install
+    - npm run prod
     - npm test --ci --coverage
 
 build:
