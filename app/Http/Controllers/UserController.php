@@ -55,7 +55,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return Redirect::route('dashboard')->with('success', [__('Welcome abord!')]);
+        return Redirect::route('dashboard')->with('success', [__('Welcome aboard!')]);
     }
 
     /**
