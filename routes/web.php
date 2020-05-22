@@ -20,6 +20,7 @@ Route::resource('/humiditysensor', 'HumiditySensorController')->except(['index',
 Route::get('/humiditysensor/{sensor}/measure', 'HumiditySensorController@measure')->name('humiditysensor.measure');
 Route::resource('/settings', 'SettingsController')->only(['index', 'store']);
 Route::resource('/user', 'UserController')->only('store', 'edit', 'update');
+Route::resource('/event', 'EventController')->only('index');
 
 // Authentification
 Auth::routes();
