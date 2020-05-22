@@ -9,7 +9,7 @@ class UserSettingsTest extends TestCase
     /** @test */
     public function userSettingsRedirectsToLogin()
     {
-        $response = $this->get('/user/1');
+        $response = $this->get('/user/1/edit');
         $response->assertRedirect('/login');
     }
 
@@ -19,7 +19,7 @@ class UserSettingsTest extends TestCase
     {
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com']);
+        ])->json('PUT', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com']);
 
         $response
             ->assertStatus(401);

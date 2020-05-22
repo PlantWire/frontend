@@ -5,7 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
 
-class StorePlatformSettingsRequest extends FormRequest
+use App\Rules\PasswordComplexity;
+
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +27,10 @@ class StorePlatformSettingsRequest extends FormRequest
     public function rules()
     {
         return [
-            'loglevel' => 'required|in:verbose,info,warning,error'
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => ['required', 'confirmed', new PasswordComplexity],
+            'password_confirmation' => 'required',
         ];
     }
 }

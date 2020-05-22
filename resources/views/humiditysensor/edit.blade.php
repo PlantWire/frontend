@@ -6,7 +6,8 @@
 <section class="section container">
     <div class="box is-vcentered is-centered">
         <h1 class="title">{{ __('Sensor Settings') }}</h1>
-        <form method="post" action="/store/{{$sensor->id}}">
+        <form method="POST" action="{{route('humiditysensor.update', ['humiditysensor' => $sensor])}}">
+            @method('PATCH')
             @csrf
             <div class="field">
                 <label class="label" for="sensor_name">{{ __('Sensor Name') }}</label>
@@ -142,9 +143,11 @@
                 </p>
                 @auth
                     <p class="control">
-                        <a  class="button is-danger" href="{{route('destroy-sensor', ['sensor' => $sensor]) }}">
-                            {{ __('control-elements.delete') }}
-                        </a>
+                        <form action="{{route('humiditysensor.destroy', ['humiditysensor' => $sensor]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" class="button is-danger" value="{{ __('control-elements.delete') }}"/>
+                        </form>
                     </p>
                     <p class="control">
                         <input class="button is-primary" id="submit" type="submit"

@@ -6,7 +6,7 @@
 <section class="section container">
     <div class="box is-vcentered is-centered">
         <h1 class="title">{{ __('Platform Settings') }}</h1>
-        <form method="post" action="/settings" class="is-clearfix">
+        <form method="POST" action="{{route('settings.store')}}" class="is-clearfix">
             @csrf
             <div class="field is-horizontal">
                 <div class="field-label is-normal">
@@ -34,7 +34,6 @@
             </div>
             <input type="submit" class="button is-primary is-pulled-right" value="{{ __('Save') }}" />
         </form>
-
     </div>
 </section>
 @endsection

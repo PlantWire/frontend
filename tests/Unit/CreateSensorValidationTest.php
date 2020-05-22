@@ -17,7 +17,7 @@ class CreateSensorValidationTest extends ValidationTestBase
     }
 
     public function getRules() {
-        $request = new \App\Http\Requests\StoreSensorRequest();
+        $request = new \App\Http\Requests\StoreHumiditySensorRequest();
         $rules = $request->rules();
         return $rules;
     }

@@ -38,10 +38,10 @@
                             </a>
 
                             <div class="navbar-dropdown">
-                                <a class="navbar-item" href="{{route('edit_user', Auth::user())}}">
+                                <a class="navbar-item" href="{{route('user.edit', Auth::user())}}">
                                     User Settings
                                 </a>
-                                <a class="navbar-item" href="{{route('platform_settings')}}">
+                                <a class="navbar-item" href="{{route('settings.index')}}">
                                     Plattform Settings
                                 </a>
                             </div>

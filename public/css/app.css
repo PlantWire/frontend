@@ -12014,6 +12014,12 @@ label.panel-block:hover {
   margin-left: 0.75em;
 }
 
+.notification > .delete {
+  position: absolute;
+  right: 1rem;
+  top: 1.4rem;
+}
+
 .textarea,
 .input {
   vertical-align: middle;
@@ -12022,5 +12028,15 @@ label.panel-block:hover {
 .input[type=number],
 .input[type=datetime-local] {
   width: auto;
+}
+
+tr.error td:first-child {
+  background-color: #e3342f;
+  color: white;
+}
+
+tr.info td:first-child {
+  background-color: #3490dc;
+  color: white;
 }
 
