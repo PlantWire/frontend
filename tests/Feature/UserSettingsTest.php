@@ -4,9 +4,13 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use \UsersTableSeeder;
 
 class UserSettingsTest extends TestCase
 {
+    use RefreshDatabase;
 
     /** @test */
     public function userSettingsRedirectsToLogin()
@@ -20,7 +24,7 @@ class UserSettingsTest extends TestCase
     {
         $this->login();
 
-        $response = $this->get('/user/1');
+        $response = $this->get('/user/1/edit');
         $response->assertStatus(200);
     }
 
@@ -41,7 +45,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Mme. Dogdottir', 'email' => 'noresponse@pwire.com']);
+        ])->json('PATCH', '/user/1', ['name' => 'Mme. Dogdottir', 'email' => 'noresponse@pwire.com']);
 
         $response->assertStatus(302);
 
@@ -57,7 +61,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['email' => 'noresponse@pwire.com']);
+        ])->json('PATCH', '/user/1', ['email' => 'noresponse@pwire.com']);
 
         $response->assertStatus(422);
         //    ->assertSessionHas(['name' => 'The Name field is required.']);
@@ -73,7 +77,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Mme. Dogdottir']);
+        ])->json('PATCH', '/user/1', ['name' => 'Mme. Dogdottir']);
 
         $response->assertStatus(422);
         //    ->assertSessionHas(['email' => 'The Email field is required.']);
@@ -89,13 +93,13 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
-            'old_password' => 'password1!', 'new_password' => 'Password2', 'new_password_confirmation' => 'Password2']);
+        ])->json('PATCH', '/user/'.$this->user->id, ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
+            'old_password' => 'password1!', 'new_password' => 'Password2!', 'new_password_confirmation' => 'Password2!']);
         $response->assertStatus(302);
 
         $this->user = $this->user->find($this->user->id);
         $this->assertFalse(Hash::check('password1!', $this->user->password));
-        $this->assertTrue(Hash::check('Password2', $this->user->password));
+        $this->assertTrue(Hash::check('Password2!', $this->user->password));
     }
 
     /** @test */
@@ -105,7 +109,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
+        ])->json('PATCH', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
             'old_password' => 'password1!']);
 
         $response->assertStatus(422);
@@ -125,7 +129,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
+        ])->json('PATCH', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
             'old_password' => 'password1!', 'new_password' => 'Password2', 'new_password_confirmation' => 'Password3']);
 
         $response->assertStatus(422);
@@ -143,7 +147,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
+        ])->json('PATCH', '/user/1', ['name' => 'Sr. Catson', 'email' => 'pwire@pwire.com',
             'old_password' => 'password1!', 'new_password' => 'password', 'new_password_confirmation' => 'password']);
 
         $response->assertStatus(422);

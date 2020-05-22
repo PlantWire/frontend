@@ -15,7 +15,7 @@ class ChangeSensorTest extends TestCase
     {
         $this->seed(HumiditySensorsTableSeeder::class);
 
-        $response = $this->get('/change-sensor/1');
+        $response = $this->get('/humiditysensor/1/edit');
         $response->assertStatus(200);
     }
 
@@ -25,7 +25,7 @@ class ChangeSensorTest extends TestCase
         $this->seed(HumiditySensorsTableSeeder::class);
         $this->login();
 
-        $response = $this->get('/change-sensor/1');
+        $response = $this->get('/humiditysensor/1/edit');
         $response->assertStatus(200);
     }
 
@@ -36,11 +36,11 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_days' => 1, 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
-        $response->assertStatus(403);
+        $response->assertStatus(401);
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_days' => 1, 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -66,7 +66,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['alarm_threshold' => 22, 'notes' => 'I\'m some notes.',
+        ])->json('PATCH', '/humiditysensor/1', ['alarm_threshold' => 22, 'notes' => 'I\'m some notes.',
             'measurement_interval_days' => 1, 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -82,7 +82,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'notes' => 'I\'m some notes.',
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'notes' => 'I\'m some notes.',
             'measurement_interval_days' => 1, 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -97,7 +97,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'measurement_interval_days' => 1, 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -112,7 +112,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_hours' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -127,7 +127,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_days' => 12,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -142,7 +142,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
         $response->assertStatus(422);
@@ -157,7 +157,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_days' => 0, 'measurement_interval_hours' => 0,
             'measurement_start' => Carbon\Carbon::now()->addDays(1)]);
 
@@ -173,7 +173,7 @@ class ChangeSensorTest extends TestCase
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
+        ])->json('PATCH', '/humiditysensor/1', ['sensor_name' => 'Erdbeeren', 'alarm_threshold' => 22,
             'notes' => 'I\'m some notes.', 'measurement_interval_days' => 12,
             'measurement_interval_hours' => 12]);
 
