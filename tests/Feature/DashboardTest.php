@@ -30,4 +30,22 @@ class DashboardTest extends TestCase
             ->assertDontSee('Log out');
     }
 
+
+    /** @test */
+    public function logoutIsOnlyOnStartPageIfLoggedIn()
+    {
+        $this->get('/')
+            ->assertSee('Log in')
+            ->assertDontSee('Log out');
+
+        $this->login();
+        $this->get('/')
+            ->assertSee('Log out')
+            ->assertDontSee('Log in');
+
+        $this->logout();
+        $this->get('/')
+            ->assertSee('Log in')
+            ->assertDontSee('Log out');
+    }
 }
