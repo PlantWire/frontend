@@ -28,9 +28,20 @@
                     </a>
 
                     @auth
-                        <a class="navbar-item" href="{{ route('logs') }}">
-                            Log
-                        </a>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                Logs
+                            </a>
+
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{ route('logs') }}">
+                                    Frontend Logs
+                                </a>
+                                <a class="navbar-item" href="{{ route('event.index') }}">
+                                    Event Logs
+                                </a>
+                            </div>
+                        </div>
 
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
