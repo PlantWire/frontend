@@ -40,5 +40,10 @@ class DetailView extends Controller
         $sensor->save();
 
          return redirect()->back()->with('success', ['Sensor was successfully updated.']);
-     }
+    }
+
+    public function destroy(HumiditySensor $sensor) {
+        $sensor->delete();
+        return redirect()->route('dashboard')->with('success', ['Sensor was successfully deleted.']);
+    }
 }
