@@ -34,9 +34,9 @@
             </div>
 
             <footer class="card-footer">
-                <a class="card-footer-item" v-bind:href="'/change-sensor/'+ sensor.id">Settings</a>
+                <a class="card-footer-item" v-bind:href="'/humiditysensor/'+ sensor.id + '/edit'">Settings</a>
                 <a class="card-footer-item" v-on:click="modal.state['is-active'] = true">Enlarge</a>
-                <a class="card-footer-item" v-bind:href="'/measure/'+ sensor.id">Measure Now</a>
+                <a class="card-footer-item" v-bind:href="'/humiditysensor/'+ sensor.id + '/measure'">Measure Now</a>
             </footer>
 
         </div>

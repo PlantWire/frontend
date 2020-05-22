@@ -12,4 +12,6 @@ return [
     */
 
     'measurement_requested' => 'Requested a new measurement for sensor ":Sensor_name"',
+    'removed' => 'Humidity Sensor was successfully removed.',
+    'updated' => 'Humidity Sensor was successfully updated.',
 ];

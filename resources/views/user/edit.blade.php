@@ -6,7 +6,8 @@
 <div class="container">
     <div class="box is-vcentered is-centered">
         <h1 class="title is-spaced">{{ __('User Settings') }}</h1>
-        <form method="POST" action="{{ route('store_user', [ 'user' => $user->id]) }}">
+        <form method="POST" action="{{ route('user.update', [ 'user' => $user->id]) }}">
+            @method('PATCH')
             @csrf
             <div class="field">
                 <label class="label">{{ __('User Details') }}</label>

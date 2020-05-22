@@ -8,7 +8,7 @@
         <div class="box">
             <h1 class="title">{{ __('Add a new sensor') }}</h1>
 
-            <form method="POST" action="{{ route('store_sensor') }}">
+            <form method="POST" action="{{ route('humiditysensor.store') }}">
             @csrf
                 <div class="field">
                     <p class="control has-icons-left">

@@ -21,7 +21,7 @@ class StoreHumiditySensorValidationTest extends ValidationTestBase
     }
 
     public function getRules() {
-        $request = new \App\Http\Requests\StoreHumiditySensor();
+        $request = new \App\Http\Requests\UpdateHumiditySensorRequest();
         $rules = $request->rules();
         return $rules;
     }
