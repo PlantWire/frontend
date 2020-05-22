@@ -27,7 +27,7 @@ class ChangePasswordRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email',
-            'old_password' => 'nullable|password:web',
+            'old_password' => 'password:web',
             'new_password' => 'required_with:old_password|confirmed',
             'new_password_confirmation' => 'required_with:old_password',
         ];

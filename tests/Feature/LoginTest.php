@@ -6,7 +6,6 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-
     /** @test */
     public function loginIsLoaded()
     {
@@ -22,13 +21,4 @@ class LoginTest extends TestCase
             ->assertDontSee('Log out');
     }
 
-    /** @test */
-    public function loginIsNotLoadedIfLoggedIn()
-    {
-        $this->login();
-
-        $response = $this->get('/login');
-        $response->assertStatus(302)
-            ->assertRedirect('/');
-    }
 }
