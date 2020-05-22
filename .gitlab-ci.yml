@@ -23,6 +23,7 @@ unit_test:
     - php artisan migrate
     - vendor/bin/phpunit --coverage-text --colors=never
     - npm install --save-dev jest
+    - npm run build
     - npm test --ci --coverage
 
 build:
