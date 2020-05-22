@@ -137,18 +137,11 @@
                     </div>
                 @endauth
             </div>
-            <div class="field is-grouped is-grouped-right">
+            <div class="field is-grouped is-grouped-right" style="position: relative; top: 2.5rem;">
                 <p class="control">
                     <a href="/" class="button">{{ __('control-elements.return_to_dashboard') }}</a>
                 </p>
                 @auth
-                    <p class="control">
-                        <form action="{{route('humiditysensor.destroy', ['humiditysensor' => $sensor]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" class="button is-danger" value="{{ __('control-elements.delete') }}"/>
-                        </form>
-                    </p>
                     <p class="control">
                         <input class="button is-primary" id="submit" type="submit"
                             value="{{ __('control-elements.save_changes') }}">
@@ -156,6 +149,13 @@
                 @endauth
             </div>
         </form>
+        <p class="control is-pulled-left">
+            <form action="{{route('humiditysensor.destroy', ['humiditysensor' => $sensor]) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <input type="submit" class="button is-danger" value="{{ __('control-elements.delete') }}"/>
+            </form>
+        </p>
     </div>
 </section>
 @endsection

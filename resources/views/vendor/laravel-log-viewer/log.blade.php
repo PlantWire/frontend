@@ -3,9 +3,9 @@
 @section('title', __('Logs'))
 
 @section('content')
-<div class="container box" style="padding: 1rem;">
+<div class="container box" >
     <div class="columns">
-        <div class="column is-one-third">
+        <div class="column is-one-quarter">
             <aside class="menu">
                 <p class="menu-label">
                     Available Logs
@@ -19,7 +19,7 @@
                             </a>
                         </p>
                         @if ($current_folder == $folder)
-                            <ul class="meun-list">
+                            <ul class="meunu-list">
                                 @foreach($folder_files as $file)
                                     <li>
                                         <a href="?l={{ \Illuminate\Support\Facades\Crypt::encrypt($file) }}&f={{ \Illuminate\Support\Facades\Crypt::encrypt($folder) }}" class="list-group-item @if ($current_file == $file) is-active @endif">
@@ -40,7 +40,7 @@
                     @endforeach
             </aside>
         </div>
-        <div class="column">
+        <div class="column is-three-quarters">
             <div class="card">
                 @if ($logs === null)
                 <div>
@@ -89,7 +89,7 @@
                         </div>
                     @else
                         <div class="card-content">
-                            <table class="table table-striped">
+                            <table class="table table-striped is-narrow is-fullwidth" style=" width: 100%; max-width:100%;">
                                 <thead>
                                     <tr>
                                         @if ($standardFormat)
@@ -112,7 +112,7 @@
                                         <td class="text">{{ $log['context'] }}</td>
                                         @endif
                                         <td class="date">{{{ $log['date'] }}}</td>
-                                        <td class="text">
+                                        <td class="text" style="line-break: anywhere;">
                                             {{{ $log['text'] }}}
                                             @if (isset($log['in_file']))
                                             <br />{{{ $log['in_file'] }}}
