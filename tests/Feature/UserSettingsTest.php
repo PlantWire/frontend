@@ -60,7 +60,7 @@ class UserSettingsTest extends TestCase
         ])->json('POST', '/user/1', ['email' => 'noresponse@pwire.com']);
 
         $response->assertStatus(422);
-        //    ->assertSessionHas(['name' => 'The field name is required.']);
+        //    ->assertSessionHas(['name' => 'The Name field is required.']);
 
         $this->user = $this->user->find($this->user->id);
         $this->assertTrue('pwire@pwire.com' === $this->user->email);
@@ -76,7 +76,7 @@ class UserSettingsTest extends TestCase
         ])->json('POST', '/user/1', ['name' => 'Mme. Dogdottir']);
 
         $response->assertStatus(422);
-        //    ->assertSessionHas(['email' => 'The field email is required.']);
+        //    ->assertSessionHas(['email' => 'The Email field is required.']);
 
         $this->user = $this->user->find($this->user->id);
         $this->assertTrue('Sr. Catson' === $this->user->name);

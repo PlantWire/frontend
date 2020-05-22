@@ -18,9 +18,23 @@ class CreateSensorTest extends TestCase
     {
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/store_sensor', ['uuid' => '1234-1234-1234-1234', 'pin' => '1234', 'name' => 'My Test-Sensor']);
+        ])->json('POST', '/store_sensor', ['uuid' => '550e8400-e29b-11d4-a716-446655440000', 'pin' => '1234', 'name' => 'MyTestSensor']);
 
         $response
             ->assertStatus(401);
+    }
+
+
+    /** @test */
+    public function sensorCanBeCreatedIfUserIsLoggedIn()
+    {
+        $this->login();
+
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json('POST', '/store_sensor', ['uuid' => '550e8400-e29b-11d4-a716-446655440000', 'pin' => '1234', 'name' => 'MyTestSensor']);
+
+        $response
+            ->assertStatus(302);
     }
 }
