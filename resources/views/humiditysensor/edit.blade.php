@@ -149,13 +149,15 @@
                 @endauth
             </div>
         </form>
-        <p class="control is-pulled-left">
-            <form action="{{route('humiditysensor.destroy', ['humiditysensor' => $sensor]) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <input type="submit" class="button is-danger" value="{{ __('control-elements.delete') }}"/>
-            </form>
-        </p>
+        @auth
+            <p class="control is-pulled-left">
+                <form action="{{route('humiditysensor.destroy', ['humiditysensor' => $sensor]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" class="button is-danger" value="{{ __('control-elements.delete') }}"/>
+                </form>
+            </p>
+        @endauth
     </div>
 </section>
 @endsection

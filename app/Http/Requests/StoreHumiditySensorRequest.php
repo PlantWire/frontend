@@ -21,7 +21,7 @@ class StoreHumiditySensorRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => 'required|uuid',
+            'uuid' => 'required|uuid|unique:humidity_sensors',
             'pin' => 'required|max:9999|min:0|numeric',
             'name' => 'required|alpha_num|max:255',
         ];
