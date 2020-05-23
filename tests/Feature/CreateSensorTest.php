@@ -16,9 +16,11 @@ class CreateSensorTest extends TestCase
     /** @test */
     public function sensorCantBeCreatedIfUserIsNotLoggedIn()
     {
+        $faker = \Faker\Factory::create();
+
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/humiditysensor', ['uuid' => '1234-1234-1234-1234', 'pin' => '1234', 'name' => 'My Test-Sensor']);
+        ])->json('POST', '/humiditysensor', ['uuid' => $faker->uuid(), 'pin' => '1234', 'name' => 'MyTestSensor']);
 
         $response
             ->assertStatus(401);
@@ -28,11 +30,13 @@ class CreateSensorTest extends TestCase
     /** @test */
     public function sensorCanBeCreatedIfUserIsLoggedIn()
     {
+        $faker = \Faker\Factory::create();
+
         $this->login();
 
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/humiditysensor', ['uuid' => '550e8400-e29b-11d4-a716-446655440000', 'pin' => '1234', 'name' => 'MyTestSensor']);
+        ])->json('POST', '/humiditysensor', ['uuid' => $faker->uuid(), 'pin' => '1234', 'name' => 'MyTestSensor']);
 
         $response
             ->assertStatus(302);

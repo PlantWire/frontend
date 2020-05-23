@@ -2,13 +2,15 @@
 
 namespace Tests\Unit;
 
-
 class CreateSensorValidationTest extends ValidationTestBase
 {
+
     private function createAttributes()
     {
+        $faker = \Faker\Factory::create();
+
         $attributes = [
-            'uuid' => 'b9c3aab6-5c77-4fdd-b86a-6713f4eb17ae',
+            'uuid' => $faker->uuid(),
             'pin' => '1234',
             'name' => 'mySensor',
         ];
