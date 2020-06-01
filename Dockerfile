@@ -8,14 +8,14 @@ RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
 
 # Install PHP and composer dependencies
-RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip build-essential nodejs
+RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libpq-dev libbz2-dev zip build-essential nodejs
 
 # Clear out the local repository of retrieved package files
 RUN apt-get clean
 
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
-RUN docker-php-ext-install pdo_mysql zip pcntl
+RUN docker-php-ext-install pdo_pgsql zip pcntl
 
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
